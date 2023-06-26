@@ -10,6 +10,16 @@ For the third part, students were required to implement the backend using Node.j
 
 Lastly, the fourth part involved recreating parts one and two utilizing Vue.js, a progressive JavaScript framework, further elevating the sophistication and responsiveness of the application.
 
+#### To effectively utilize the files and gain insights into their functionality, distinct steps should be followed for each task:
+
+__Task 1__: As the files are static, the simplest approach is to utilize a live server or manually examine the HTML files individually.
+
+__Task 2__: Navigate to the folder `./Task 2 - JavaScript/test` and execute `npm install` to install dependencies. Subsequently, initiate the server by running `npm run server` to explore the functionality of the web application.
+
+__Task 3__: Execute `npm install` within the `./Task 3 - Node` folder to install dependencies. Launch the server by running `npm start`. At this point, requests can be sent to interact with the server.
+
+__Task 4__: Install dependencies by executing `npm install"` within the `./Task 4 - Vue.js/test` folder. Start the application by running `npm run dev` to observe its functionality in action.
+
 ##### Detailed descriptions of tasks are given below
 
 ## Assignment 1: HTML & CSS
