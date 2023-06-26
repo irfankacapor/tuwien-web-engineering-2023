@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>A2 Test Report</title>
+  <style>
+    :root {
+      --sans: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+      --mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+    }
+
+    body {
+      font-family: var(--sans);
+      margin: 4rem;
+    }
+
+    pre {
+      font-family: var(--mono);
+      white-space: pre-wrap;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-spacing: 0;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+
+    td {
+      border-top: 1px solid black;
+      padding: 0.5em 0;
+      word-wrap: break-word;
+    }
+
+    tr.test {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .passed {
+      background-color: lightgreen;
+    }
+
+    .passed>td:first-child::before {
+      content: '✓';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .failed {
+      background-color: lightcoral;
+    }
+
+    .failed>td:first-child::before {
+      content: '✘';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .pending {
+      background-color: gainsboro;
+    }
+
+    .pending>td:first-child::before {
+      content: '?';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .error>td {
+      padding: 1em;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+    }
+
+    .points {
+      text-align: right;
+      width: 5ch;
+      padding-right: 1em;
+      padding-left: 1em;
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+
+    x-rand {
+      background-color: lightgoldenrodyellow;
+    }
+
+    x-user {
+      background-color: aliceblue;
+    }
+
+    details {
+      display: block;
+      word-wrap: break-word;
+      margin: 0.5em 1em;
+    }
+
+    details > details {
+      margin-left: 1.5em;
+    }
+
+    summary {
+      outline: none;
+      cursor: pointer;
+    }
+
+    .description {
+      display: inline;
+    }
+
+    .description::before {
+      content: '☑ ';
+    }
+
+    .info {
+      font-size: small;
+      margin-left: 1.75em;
+      margin-top: 0.5em;
+    }
+
+    .info ul {
+      padding-left: 1.5em;
+    }
+
+    details.empty {
+      pointer-events: none;
+    }
+
+    details.empty>summary::-webkit-details-marker,
+    details.empty>summary::marker {
+      color: white;
+    }
+
+    td>details:last-child>summary>.description,
+    td>details:last-child>details:last-child>summary>.description {
+      color: red;
+    }
+
+    td>details:last-child>summary>.description::before,
+    td>details:last-child>details:last-child>summary>.description::before {
+      content: '☒ ';
+    }
+  </style>
+  <script>
+    function toggle(e) {
+      const x = e.nextElementSibling;
+      if (x.style.display == 'block') {
+        x.style.display = 'none';
+        e.innerText = 'show';
+      } else {
+        x.style.display = 'block';
+        e.innerText = 'hide';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('td > details:last-child').forEach((e) => e.open = true);
+      document.querySelectorAll('td > details:last-child > details:last-child').forEach((e) => e.open = true);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>A2 Test Report<span style="float: right;">12 points </span></h1>
+  2023-06-26 15:17:35 UTC<br>
+  36 tests &mdash; 23 passed / 13 failed<br>
+  <br>
+  25 points<br>
+  &minus;13 points for failed tests<br>
+  = 12 points total<br>
+  <br>
+  Seed: <code>1</code><br>
+  <small>(used to generate <x-rand>random input values</x-rand>)</small><br>
+
+  <h2>Search</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>101 &mdash; Valid HTML</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>102 &mdash; Show highlights</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/search.html</code></div>
+          </summary>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">expect page to contain artwork and description for object <code><x-rand>39799</x-rand></code></div>
+          </summary>
+          <div class="info"><pre>{
+  "objectID": <x-rand>39799</x-rand>,
+  "primaryImageSmall": "<x-rand>https://images.example.com/JG3GB3.jpg</x-rand>",
+  "title": "<x-rand>Nacuv go oncov bujlugu jokunwo dabi oj bi bema</x-rand>",
+  "artistDisplayName": "<x-rand>Lucinda Luella Swanson</x-rand>",
+  "objectDate": "<x-rand>1416</x-rand>"
+}</pre></div>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Text not found: &quot;Nacuv go oncov bujlugu jokunwo dabi oj bi bema, 1416&quot;</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>103 &mdash; Search via query parameter</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/search.html?q=<x-rand>homekus</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">expect page to contain artwork and description for object <code><x-rand>405440</x-rand></code></div>
+          </summary>
+          <div class="info"><pre>{
+  "objectID": <x-rand>405440</x-rand>,
+  "primaryImageSmall": "<x-rand>https://images.example.com/V9OR4X.jpg</x-rand>",
+  "title": "<x-rand>Bemu bemiwfe</x-rand>",
+  "artistDisplayName": "<x-rand>Lillian Gonzalez</x-rand>",
+  "objectDate": "<x-rand>1815</x-rand>"
+}</pre></div>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Text not found: &quot;Lillian Gonzalez&quot;</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>104 &mdash; Search via search field</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/search.html</code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">type <code><x-rand>kutawwaj</x-rand></code> into <code>input[type=&quot;search&quot;]</code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">click <code>button</code> with text matching <code>Search</code> and wait for navigation</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Navigation timeout of 2000 ms exceeded</td>
+    </tr>
+
+    <tr class="test passed">
+      <td>105 &mdash; Show correct text when not searching</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>106 &mdash; Show correct text when search done</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/search.html?q=<x-rand>zinhula</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect page to contain the correct text for <x-rand>three</x-rand> results</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Text not found: &quot;Found 3 artworks for “zinhula”&quot;</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>107 &mdash; Consider only artworks with images</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/search.html?q=<x-rand>bindarve</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect Met API search request to be restricted to objects that have images</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>No requests detected.</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>108 &mdash; Show at most 100 results</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/search.html?q=<x-rand>pirgisweuz</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect no more than 100 results to be shown</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected number of results: 100
+
+Actual number of results: 11</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>109 &mdash; Cache Met objects</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/search.html?q=<x-rand>vejturvo</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect Met API requests for objects <code><x-rand>878746</x-rand></code>, <code><x-rand>854085</x-rand></code>, <code><x-rand>200039</x-rand></code></div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected requests:
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;878746
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;854085
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;200039
+
+Actual requests:
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;437853
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;435809
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;436535
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;360018
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;634108
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;459080
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;435882
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;271890
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;459055
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;39799
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;459054
+
+(The order of requests does not matter.)</td>
+    </tr>
+
+    <tr class="test passed">
+      <td>110 &mdash; Show number of items in cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Framing</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>201 &mdash; Valid HTML</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>202 &mdash; Redirect if object ID is missing</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>203 &mdash; Redirect if object does not exist</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>204 &mdash; Show artwork and description</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/framing.html?objectID=<x-rand>960261</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">expect page to contain artwork and description for object <code><x-rand>960261</x-rand></code></div>
+          </summary>
+          <div class="info"><pre>{
+  "objectID": <x-rand>960261</x-rand>,
+  "primaryImageSmall": "<x-rand>https://images.example.com/FUL9E3.jpg</x-rand>",
+  "title": "<x-rand>Mogtojek vibwuh ecvog lupeovo jugzopdid litaf ap jeozi favozti kuw</x-rand>",
+  "artistDisplayName": "<x-rand>Cory Nathan Davidson</x-rand>",
+  "objectDate": "<x-rand>1655</x-rand>"
+}</pre></div>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Text not found: &quot;Cory Nathan Davidson&quot;</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>205 &mdash; Set controls via query parameters</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/framing.html?objectID=<x-rand>427325</x-rand>&printSize=<x-rand>S</x-rand>&frameWidth=<x-rand>38</x-rand>&frameStyle=<x-rand>elegant</x-rand>&matWidth=<x-rand>5</x-rand>&matColor=<x-rand>cerise</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect <code>value</code> of <code>input[name=printSize]:checked</code> to be <code><x-rand>S</x-rand></code></div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Element input[name&#x3D;printSize]:checked not found
+waiting for function failed: timeout 500ms exceeded</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>206 &mdash; Calculate price when controls are set via query parameters</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/framing.html?objectID=<x-rand>502965</x-rand>&printSize=<x-rand>M</x-rand>&frameWidth=<x-rand>30</x-rand>&frameStyle=<x-rand>shabby</x-rand>&matWidth=<x-rand>5</x-rand>&matColor=<x-rand>tea</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect to find correct price on page</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Text not found: &quot;€ 130.50&quot;</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>207 &mdash; Update price when controls change</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/framing.html?objectID=<x-rand>110907</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">click <code>label</code> with text matching <code><x-rand>Large</x-rand></code></div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Element not found: label (with text matching &quot;Large&quot;)</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>208 &mdash; Cache Met objects</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/framing.html?objectID=<x-rand>843284</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect Met API request for object <code><x-rand>843284</x-rand></code></div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected requests:
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;843284
+
+Actual requests:
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;ectID&#x3D;843284
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;437853
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;435809
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;436535
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;360018
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;634108
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;459080
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;435882
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;271890
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;459055
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;39799
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;459054
+
+(The order of requests does not matter.)</td>
+    </tr>
+
+    <tr class="test passed">
+      <td>209 &mdash; Show number of items in cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Cart</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>301 &mdash; Valid HTML</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>302 &mdash; Show empty state</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>303 &mdash; Show artwork and description for each item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>304 &mdash; Show textual frame description for each item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>305 &mdash; Calculate price for each item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>306 &mdash; Link to framing page for each item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>307 &mdash; Calculate total price</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>308 &mdash; Remove one item via button</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>309 &mdash; Remove one item via button and show correct total price</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>310 &mdash; Remove two items via button</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>311 &mdash; Cache Met objects</td>
+      <td class="points">&minus;1</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting HTTP requests</div>
+          </summary>
+          <div class="info"><ul><li><code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li><li><code>GET</code> requests to <code>images.example.com</code> will return a test image.</li><li><code>GET</code> requests to <code>localhost</code> will continue unaltered.</li><li>All other requests will be aborted.</li></ul></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">put <x-rand>one</x-rand> item in the cart</div>
+          </summary>
+          <div class="info"><pre>localStorage.setItem('cart', JSON.stringify([
+  {
+    "objectID": <x-rand>341533</x-rand>,
+    "printSize": "<x-rand>L</x-rand>",
+    "frameStyle": "<x-rand>elegant</x-rand>",
+    "frameWidth": <x-rand>48</x-rand>,
+    "matColor": "<x-rand>raisin</x-rand>",
+    "matWidth": <x-rand>4</x-rand>
+  }
+]))</pre></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">navigate to <code>http://localhost:4444/cart.html</code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect Met API request for object <code><x-rand>341533</x-rand></code></div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">reload the page</div>
+          </summary>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect no more Met API requests (due to caching)</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected requests:
+  (none)
+
+Actual requests:
+  https:&#x2F;&#x2F;collectionapi.metmuseum.org&#x2F;public&#x2F;collection&#x2F;v1&#x2F;objects&#x2F;341533
+
+(The order of requests does not matter.)</td>
+    </tr>
+
+    <tr class="test passed">
+      <td>312 &mdash; Show number of items in cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Checkout</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>401 &mdash; Valid HTML</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>402 &mdash; Redirect if cart is empty</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>403 &mdash; Calculate subtotal</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>404 &mdash; Calculate shipping costs</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>405 &mdash; Calculate total</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+</body>
+
+</html>

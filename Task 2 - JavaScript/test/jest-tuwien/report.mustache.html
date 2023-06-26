@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}} Test Report</title>
+  <style>
+    :root {
+      --sans: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+      --mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+    }
+
+    body {
+      font-family: var(--sans);
+      margin: 4rem;
+    }
+
+    pre {
+      font-family: var(--mono);
+      white-space: pre-wrap;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-spacing: 0;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+
+    td {
+      border-top: 1px solid black;
+      padding: 0.5em 0;
+      word-wrap: break-word;
+    }
+
+    tr.test {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .passed {
+      background-color: lightgreen;
+    }
+
+    .passed>td:first-child::before {
+      content: '✓';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .failed {
+      background-color: lightcoral;
+    }
+
+    .failed>td:first-child::before {
+      content: '✘';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .pending {
+      background-color: gainsboro;
+    }
+
+    .pending>td:first-child::before {
+      content: '?';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .error>td {
+      padding: 1em;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+    }
+
+    .points {
+      text-align: right;
+      width: 5ch;
+      padding-right: 1em;
+      padding-left: 1em;
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+
+    x-rand {
+      background-color: lightgoldenrodyellow;
+    }
+
+    x-user {
+      background-color: aliceblue;
+    }
+
+    details {
+      display: block;
+      word-wrap: break-word;
+      margin: 0.5em 1em;
+    }
+
+    details > details {
+      margin-left: 1.5em;
+    }
+
+    summary {
+      outline: none;
+      cursor: pointer;
+    }
+
+    .description {
+      display: inline;
+    }
+
+    .description::before {
+      content: '☑ ';
+    }
+
+    .info {
+      font-size: small;
+      margin-left: 1.75em;
+      margin-top: 0.5em;
+    }
+
+    .info ul {
+      padding-left: 1.5em;
+    }
+
+    details.empty {
+      pointer-events: none;
+    }
+
+    details.empty>summary::-webkit-details-marker,
+    details.empty>summary::marker {
+      color: white;
+    }
+
+    td>details:last-child>summary>.description,
+    td>details:last-child>details:last-child>summary>.description {
+      color: red;
+    }
+
+    td>details:last-child>summary>.description::before,
+    td>details:last-child>details:last-child>summary>.description::before {
+      content: '☒ ';
+    }
+  </style>
+  <script>
+    function toggle(e) {
+      const x = e.nextElementSibling;
+      if (x.style.display == 'block') {
+        x.style.display = 'none';
+        e.innerText = 'show';
+      } else {
+        x.style.display = 'block';
+        e.innerText = 'hide';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('td > details:last-child').forEach((e) => e.open = true);
+      document.querySelectorAll('td > details:last-child > details:last-child').forEach((e) => e.open = true);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>{{title}} Test Report<span style="float: right;">{{totalPoints}} points {{partyFace}}</span></h1>
+  {{startTime}}<br>
+  {{numTotalTests}} tests &mdash; {{numPassedTests}} passed / {{numFailedTests}} failed<br>
+  <br>
+  {{maxPoints}} points<br>
+  &minus;{{minusPoints}} points for failed tests<br>
+  = {{totalPoints}} points total<br>
+  <br>
+  Seed: <code>{{seed}}</code><br>
+  <small>(used to generate <x-rand>random input values</x-rand>)</small><br>
+
+  {{#sections}}
+  <h2>{{testName}}</h2>
+
+  {{#testExecError}}
+  <table>
+    <tr class="test failed">
+      <td>Test execution error</td>
+      <td class="points">&minus;{{minusPoints}}</td>
+    </tr>
+    <tr class="error">
+      <td colspan=2>{{errorMessage}}</td>
+    </tr>
+  </table>
+  {{/testExecError}}
+
+  <table>
+    {{#tests}}
+    <tr class="test {{status}}">
+      <td>{{testId}} &mdash; {{title}}</td>
+      <td class="points">{{#minusPoints}}&minus;{{.}}{{/minusPoints}}</td>
+    </tr>
+
+    {{#steps.length}}
+    <tr>
+      <td colspan=2>
+        {{#steps}}
+        <details class="{{^more}}empty{{/more}}">
+          <summary>
+            <div class="description">{{{description}}}</div>
+          </summary>
+          {{#more}}
+          {{#info}}<div class="info">{{{.}}}</div>{{/info}}
+          {{#substeps}}
+          <details class="{{^more}}empty{{/more}}">
+            <summary>
+              <div class="description">{{{description}}}</div>
+            </summary>
+            {{#more}}
+            {{#info}}<div class="info">{{{.}}}</div>{{/info}}
+            {{/more}}
+          </details>
+          {{/substeps}}
+          {{/more}}
+        </details>
+        {{/steps}}
+      </td>
+    </tr>
+    {{/steps.length}}
+
+    {{#errorMessage}}
+    <tr class="error">
+      <td colspan=2>{{.}}</td>
+    </tr>
+    {{/errorMessage}}
+
+    {{/tests}}
+  </table>
+  {{/sections}}
+</body>
+
+</html>
