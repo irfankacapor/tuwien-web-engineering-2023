@@ -1,3 +1,5 @@
+# Web Engineering - Technical University of Vienna 2023
+
 This repository encompasses the comprehensive collection of tasks completed during the Web Engineering course at the Technical University of Vienna. The course was divided into four distinct parts. 
 
 In the initial part, students were tasked with finalizing HTML and CSS files based on a provided PDF file that outlined the desired visual appearance. 
@@ -8,9 +10,9 @@ For the third part, students were required to implement the backend using Node.j
 
 Lastly, the fourth part involved recreating parts one and two utilizing Vue.js, a progressive JavaScript framework, further elevating the sophistication and responsiveness of the application.
 
-## Detailed descriptions of tasks are given below
+##### Detailed descriptions of tasks are given below
 
-# Assignment 1: HTML & CSS
+## Assignment 1: HTML & CSS
 
 You are tasked with building the website for __Artmart__, a web shop for fine art prints.
 
@@ -18,13 +20,13 @@ In this first assignment, you will implement the responsive design of the Artmar
 
 You should build the website inside the `www` folder. It already contains some HTML and CSS fragments for you to use as starting points, as well as various graphical assets used throughout the site. Take a look at what's there and figure out what remains to be done.
 
-# Assignment 2: JavaScript
+## Assignment 2: JavaScript
 
 In this second assignment, you are tasked with adding interactivity to the __Artmart__ website using JavaScript.
 
 You should build the website inside the `www` folder. It already contains a complete sample solution for A1, so you don't have to re-implement all of the HTML and CSS for the static part of the website. It also contains JavaScript fragments to use as starting points for A2. Take a look at what's there and figure out what remains to be done.
 
-## What you need to do
+#### What you need to do
 
 - Familiarize yourself with the [Metropolitan Museum of Art Collection API][Met API], in particular the *Search* and *Object* endpoints. You will use this API throughout the rest of this course to access public domain images and metadata of artworks from the collection of the Metropolitan Museum of Art of New York City
 
@@ -70,13 +72,13 @@ You should build the website inside the `www` folder. It already contains a comp
 
 [Met API]: https://metmuseum.github.io
 
-# Assignment 3: Backend with Node.js
+## Assignment 3: Backend with Node.js
 
 In this third assignment, you are tasked with implementing a backend API server for __Artmart__.
 
 You will be using [Node.js](https://nodejs.org) and the [Express](https://expressjs.com) framework (version 4). The `server` folder already contains a partial solution which you should use as a starting point. As always, take a look at what's there and figure out what remains to be done.
 
-## What you need to do
+#### What you need to do
 
 - You need to fully implement the API specified in the [Artmart API documentation][api_docs] and fulfill the additional requirements described below.
 
@@ -126,7 +128,7 @@ For the **``/frames``**, **``/mats``**, and **``/shipping``** endpoints:
 
 - The available frames, mat colors and shipping destinations can be found in the `server/resources` folder.
 
-# Assignment 4: Frontend with Vue.js
+## Assignment 4: Frontend with Vue.js
 
 In the fourth and final assignment, you are tasked with using the [Vue.js framework](https://vuejs.org/) (version 3) to re-implement the **Artmart** frontend from A2 and to connect it to the backend API from A3.
 
@@ -138,11 +140,11 @@ We have used [Vue Router](https://router.vuejs.org/) (version 4) to implement in
 
 We have used [Pinia](https://pinia.vuejs.org/) (version 2) to implement centralized state management. Carefully read through the code in `store.js` and understand how state, getters, mutations, and actions relate to each other, and how the store interacts with the backend API. The proper way to interact with the store from within components is by adding a computed `artmartStore: mapStores(useArtmartStore).artmartStore,` and then using it through `this.artmartStore`. Check out the [Pinia documentation](https://pinia.vuejs.org/) for more information. Note that you should not modify `store.js`, all necessary functionality is already provided.
 
-## What you need to do
+#### What you need to do
 
 We already implemented all the functionality of the Search page for you to explore (`SearchPage.vue`). What you need to do is to complete the implementation of the remaining pages and some of their required components.
 
-### Width Slider Component (`src/components/framing/WidthSlider.vue`)
+##### Width Slider Component (`src/components/framing/WidthSlider.vue`)
 
 - Implement a reusable, self-contained component that encapsulates the number input / range slider combination used by the _Frame Width_ and _Mat Width_ options of the Framing page.
 
@@ -167,7 +169,7 @@ We already implemented all the functionality of the Search page for you to explo
 
 - Beware that the unit of the component value is _millimeters_, while the HTML form values (which reflect what the user sees) are in _centimeters_.
 
-### Framing Page (`src/pages/FramingPage.vue`)
+##### Framing Page (`src/pages/FramingPage.vue`)
 
 - Insert the missing components of the frame configurator and ensure that everything is functional and bound properly (using `v-model`) to the respective `config` data model properties. In particular, you need to instantiate the following components:
 
@@ -187,7 +189,7 @@ We already implemented all the functionality of the Search page for you to explo
 
   - Redirect to the Cart page using `this.$router`.
 
-### Cart Item Component (`src/components/CartItem.vue`)
+##### Cart Item Component (`src/components/CartItem.vue`)
 
 - The component expects to receive a `cartItem` object (containing `artworkId`, `price`, `printSize`, `frameWidth`, `frameStyle`, `matWidth`, `matColor`) on instantiation.
 
@@ -201,7 +203,7 @@ We already implemented all the functionality of the Search page for you to explo
 
 - When the remove button is clicked, update the shopping cart by properly communicating with the Pinia store (using `this.artmartStore` after having added it to the component).
 
-### Cart Page (`src/pages/CartPage.vue`)
+##### Cart Page (`src/pages/CartPage.vue`)
 
 - If there are no items in the shopping cart, display the text "There are no items in your shopping cart."
 
@@ -211,7 +213,7 @@ We already implemented all the functionality of the Search page for you to explo
 
 - When clicking the "Checkout" button, redirect to the Checkout page. Hint: Use the `tag` property of [`router-link`](https://v3.router.vuejs.org/api/#router-link).
 
-### Checkout Page (`src/pages/CheckoutPage.vue`)
+##### Checkout Page (`src/pages/CheckoutPage.vue`)
 
 - If the shopping cart is empty, redirect to the Cart page using `this.$router`.
 
