@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>A4 Test Report</title>
+  <style>
+    :root {
+      --sans: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+      --mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+    }
+
+    body {
+      font-family: var(--sans);
+      margin: 4rem;
+    }
+
+    pre {
+      font-family: var(--mono);
+      white-space: pre-wrap;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-spacing: 0;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+
+    td {
+      border-top: 1px solid black;
+      padding: 0.5em 0;
+      word-wrap: break-word;
+    }
+
+    tr.test {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .passed {
+      background-color: lightgreen;
+    }
+
+    .passed>td:first-child::before {
+      content: '✓';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .failed {
+      background-color: lightcoral;
+    }
+
+    .failed>td:first-child::before {
+      content: '✘';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .pending {
+      background-color: gainsboro;
+    }
+
+    .pending>td:first-child::before {
+      content: '?';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .error>td {
+      padding: 1em;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+    }
+
+    .points {
+      text-align: right;
+      width: 5ch;
+      padding-right: 1em;
+      padding-left: 1em;
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+
+    x-rand {
+      background-color: lightgoldenrodyellow;
+    }
+
+    x-diff {
+      background-color: rgb(240 128 128 / 20%);
+    }
+
+    x-user {
+      background-color: aliceblue;
+    }
+
+    details {
+      display: block;
+      word-wrap: break-word;
+      margin: 0.5em 1em;
+    }
+
+    details > details {
+      margin-left: 1.5em;
+    }
+
+    summary {
+      outline: none;
+      cursor: pointer;
+    }
+
+    .description {
+      display: inline;
+    }
+
+    .description::before {
+      content: '☑ ';
+    }
+
+    .info {
+      font-size: small;
+      margin-left: 1.75em;
+      margin-top: 0.5em;
+    }
+
+    .info ul {
+      padding-left: 1.5em;
+    }
+
+    details.empty {
+      pointer-events: none;
+    }
+
+    details.empty>summary::-webkit-details-marker,
+    details.empty>summary::marker {
+      color: white;
+    }
+
+    td>details:last-child>summary>.description,
+    td>details:last-child>details:last-child>summary>.description {
+      color: red;
+    }
+
+    td>details:last-child>summary>.description::before,
+    td>details:last-child>details:last-child>summary>.description::before {
+      content: '☒ ';
+    }
+  </style>
+  <script>
+    function toggle(e) {
+      const x = e.nextElementSibling;
+      if (x.style.display == 'block') {
+        x.style.display = 'none';
+        e.innerText = 'show';
+      } else {
+        x.style.display = 'block';
+        e.innerText = 'hide';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('td > details:last-child').forEach((e) => e.open = true);
+      document.querySelectorAll('td > details:last-child > details:last-child').forEach((e) => e.open = true);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>A4 Test Report<span style="float: right;">15 points 🥳</span></h1>
+  2023-06-26 15:22:26 UTC<br>
+  30 tests &mdash; 30 passed / 0 failed<br>
+  <br>
+  15 points<br>
+  &minus;0 points for failed tests<br>
+  = 15 points total<br>
+  <br>
+  Seed: <code>1</code><br>
+  <small>(used to generate <x-rand>random input values</x-rand>)</small><br>
+
+  <h2>WidthSlider</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>101 &mdash; Text field initial value</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>102 &mdash; Range slider initial value</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>103 &mdash; Text field change causes an event</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>104 &mdash; Range slider input causes an event</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>105 &mdash; Min and max bounds for value</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>106 &mdash; Decimal values get truncated</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Framing</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>201 &mdash; Frame width slider</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>202 &mdash; Frame style picker</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>203 &mdash; Mat width slider</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>204 &mdash; Mat color picker</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>205 &mdash; Price</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>206 &mdash; Add to Cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>CartItem</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>301 &mdash; FramedArtwork subcomponent</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>302 &mdash; MuseumLabel subcomponent</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>303 &mdash; Frame description</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>304 &mdash; Price</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>305 &mdash; Remove</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Cart</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>401 &mdash; Empty state</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>402 &mdash; CartItem subcomponents</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>403 &mdash; Total price</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>404 &mdash; Checkout</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Checkout</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>501 &mdash; Empty cart redirect</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>502 &mdash; Subtotal</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>503 &mdash; Shipping costs</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>504 &mdash; Total price</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>505 &mdash; Successful payment</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>506 &mdash; Failed payment (1)</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>507 &mdash; Failed payment (2)</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>508 &mdash; Payment in progress (1)</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>509 &mdash; Payment in progress (2)</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+</body>
+
+</html>

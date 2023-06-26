@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Cart | Artmart</title>
+</head>
+
+<body>
+  <header>
+    <a href="search.html">
+      <img src="artmart_logo.png" alt="Artmart" class="logo">
+    </a>
+    <nav>
+      <a href="search.html">Search</a>
+      <a href="cart.html" id="cart-link">Cart</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="cart" class="cart">
+      <script>
+        cartItems = getCartItems();
+
+        function removeItem(index){
+          const itemToBeRemoved = document.getElementById(`${index}`);
+          const priceOfItemToBeRemoved = document.querySelector(`#p${index}`).innerText.substring(2);
+          itemToBeRemoved.remove();
+          cartItems.splice(index - 1, 1);
+
+          
+          updateCartItemCount(cartItems);
+          
+          updateTotalPrice(priceOfItemToBeRemoved);
+          putCartItems(cartItems);
+        }
+
+        function putCartItems(items){
+          console.log(items);
+          localStorage.setItem("cart", JSON.stringify(items));
+        }
+
+        function updateCartItemCount(items){
+          const itemCount = items.length;
+          const link = document.querySelector("#cart-link");
+          if (itemCount === 0) {
+            link.textContent = "Cart";
+            const cart = document.getElementById("cart");
+            const message = document.createElement("h1");
+            message.innerText = "There are no items in your shopping cart.";
+            cart.appendChild(message);
+            document.querySelector("#cart-checkout").style.visibility = "hidden";
+            document.querySelector("#cart-total").style.visibility = "hidden";
+          } else {
+            link.textContent = "Cart (" + itemCount + ")";
+          }
+        }
+
+        function updateTotalPrice(price){
+          const totalPrice = document.getElementById("price-total");
+          const formerPrice = parseFloat(totalPrice.innerText.substring(2)).toFixed(2);
+          const newPrice = formerPrice - parseFloat(price).toFixed(2);
+          totalPrice.innerText = "€ " + newPrice.toFixed(2);
+        }
+
+        function getCartItems() {
+          var cart = JSON.parse(localStorage.getItem('cart'));
+          if (!cart) {
+              cart = [];
+          }
+          return cart;
+        }
+      </script>
+
+      <div id="cart-total" class="cart-total">Total: <span id="price-total">0</span></div>
+      <button type="button" id="cart-checkout" class="cart-checkout" onclick="window.location.href='checkout.html';">Checkout</button>
+    </section>
+  </main>
+
+  <script type="module">
+    import * as Frame from './frame.js';
+    import * as Cart from './cart.js';
+    let numberOfItems = 0;
+    // First get the items that were added to the cart using the helper function in cart.js
+    const cartItems = Cart.getCartItems();
+    
+    // Then calculate the total price of all items
+    const link = document.querySelector("#cart-link");
+    if (cartItems.length === 0) {
+      link.textContent = "Cart";
+      const cart = document.getElementById("cart");
+      const message = document.createElement("h1");
+      message.innerText = "There are no items in your shopping cart.";
+      cart.appendChild(message);
+      document.querySelector("#cart-checkout").style.visibility = "hidden";
+      document.querySelector("#cart-total").style.visibility = "hidden";
+    } else {
+      link.textContent = "Cart (" + cartItems.length + ")";
+    }
+    let total = 0;
+    for(let i = 0; i < cartItems.length; i++){
+      const currentItem = cartItems[i];
+      total += parseFloat(await createCartItem(currentItem))
+    }
+    const totalPrice = document.querySelector("#price-total");
+    totalPrice.textContent = "€ " + total.toFixed(2);
+
+    /** 
+     * Adds the given cart item to the DOM.
+     * 
+     * TODO: finalize this function
+     *
+     * @param cartItem A cart item from local storage.
+    */
+    async function createCartItem(cartItem) {
+      // First get the data that is needed to write the correct info
+      const data = await getData(cartItem.objectID);
+      
+      async function getData(objectID){
+        let response = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`) // Get specific artwork
+        let rawData = await response.json();
+        return rawData;
+        // const headers = new Headers();
+        // const request = new Request("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + objectID, {
+        //   method: "GET",
+        //   headers: headers,
+        //   mode: "cors",
+        //   cache: "force-cache"
+        // })
+        // try{
+        //   const cache= await caches.open("v1");
+        //   const cachedResponse = await cache.match(request);
+
+        //   if(!cachedResponse){
+        //     return cachedResponse.json();
+        //   }else{
+        //     const response = await fetch(request);
+        //     await cache.put(request, response.clone());
+        //     const cachedValue = await cache.match(request);
+        //     return cachedValue.json();
+        //   }
+        // } catch (error) {
+        //   console.log(error);
+        // }
+      }
+
+      const printSize = cartItem.printSize;
+      const frameStyle = cartItem.frameStyle;
+      const frameWidth = cartItem.frameWidth;
+      const matColor = cartItem.matColor;
+      const matWidth = cartItem.matWidth;
+
+      const itemDiv = document.createElement("div");
+      itemDiv.classList.add("cart-item");
+
+      const previewDiv = document.createElement("div");
+      previewDiv.classList.add("cart-preview");
+
+      const previewImg = document.createElement("img");
+      previewImg.classList.add("cart-thumb")
+      previewImg.src = data.primaryImageSmall;
+      previewImg.onload = () => {
+        Frame.render(previewImg, previewDiv, null, printSize, frameStyle, frameWidth, matColor, matWidth);
+      };
+
+      // TODO: complete link URL
+      const framingLink = document.createElement("a");
+      framingLink.href = `framing.html?objectID=${cartItem.objectID}&printSize=${cartItem.printSize}&frameStyle=${cartItem.frameStyle}&frameWidth=${cartItem.frameWidth}&matColor=${cartItem.matColor}&matWidth=${cartItem.matWidth}`;
+      framingLink.appendChild(previewImg);
+
+      previewDiv.appendChild(framingLink);
+      itemDiv.appendChild(previewDiv);
+
+      // TODO: complete item description
+      let itemSize = (cartItem.printSize == "S") ? "Small":
+                  (cartItem.printSize == "M") ? "Medium":
+                  (cartItem.printSize == "L") ? "Large": "Medium";
+
+      const itemPrice = (Frame.calculatePrice(cartItem.printSize, cartItem.frameStyle, cartItem.frameWidth, cartItem.matWidth)/100).toFixed(2);
+      
+      
+      let description = (cartItem.matWidth != 0) ? `${itemSize} print in a ${cartItem.frameWidth / 10} cm ${cartItem.frameStyle} frame with a ${cartItem.matWidth/10} cm ${cartItem.matColor} mat.`: `${itemSize} print in a ${cartItem.frameWidth / 10} cm ${cartItem.frameStyle} frame.`
+      
+      numberOfItems += 1;
+
+      itemDiv.classList.add("cart-item");
+      itemDiv.id = `${numberOfItems}`;
+    
+      const labelDiv = document.createElement("div");
+      labelDiv.classList.add("museum-label");
+      labelDiv.innerHTML = `
+          <div>
+            <span class="artist">${data.artistDisplayName}</span>
+            <span class="title">${data.title}</span>,
+            <span class="date">${data.objectDate}</span>
+            <br><br>
+            <span class="frame-description">${description}</span>
+          </div>
+          <div class="price" id="p${numberOfItems}">€ ${itemPrice}</div>
+          <button class="cart-remove" aria-label="Remove" onclick="removeItem(${numberOfItems})"></button>`;
+
+      itemDiv.appendChild(labelDiv);
+      
+      // TODO: add itemDiv to DOM
+      const cart = document.getElementById("cart");
+      cart.insertAdjacentElement("afterbegin", itemDiv);
+      return itemPrice;
+    }
+  </script>
+</body>
+
+</html>

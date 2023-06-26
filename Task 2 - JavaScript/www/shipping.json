@@ -1,0 +1,38 @@
+{
+    "countries": [
+        {
+            "displayName": "Austria",
+            "isoCode": "AT",
+            "price": 1500,
+            "freeShippingPossible": true,
+            "freeShippingThreshold": 10000
+        },
+        {
+            "displayName": "Germany",
+            "isoCode": "DE",
+            "price": 1800,
+            "freeShippingPossible": true,
+            "freeShippingThreshold": 15000
+        },
+        {
+            "displayName": "Switzerland",
+            "isoCode": "CH",
+            "price": 2500,
+            "freeShippingPossible": true,
+            "freeShippingThreshold": 30000
+        },
+        {
+            "displayName": "United Kingdom",
+            "isoCode": "GB",
+            "price": 3000,
+            "freeShippingPossible": false
+        },
+        {
+            "displayName": "Netherlands",
+            "isoCode": "NL",
+            "price": 2000,
+            "freeShippingPossible": true,
+            "freeShippingThreshold": 15000
+        }
+    ]
+}

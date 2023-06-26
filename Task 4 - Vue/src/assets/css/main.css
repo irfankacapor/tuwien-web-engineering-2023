@@ -1,0 +1,102 @@
+:root {
+  --serif-font: Palatino, "Palatino Linotype", "URW Palladio L", serif;
+  --bg-color: #f3f6f5;
+  --primary-color: #2e2225;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --border-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: var(--serif-font);
+  font-size: 100%;
+  line-height: 1.2rem;
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  height: 100%;
+  margin: 0;
+}
+
+main {
+  margin: 0 4rem 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  main {
+    margin: 0 2rem;
+  }
+}
+
+img {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+button {
+  font-family: inherit;
+  font-size: 1em;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+  border: none;
+  height: 2.5em;
+  margin: 0;
+  padding: 0 2em;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+  button {
+    padding: 0 1em;
+  }
+}
+
+.museum-label {
+  background-color: white;
+  box-shadow: 2px 2px 3px 0px var(--shadow-color);
+  padding: 1em;
+}
+
+.artist {
+  display: block;
+  font-weight: bold;
+}
+
+.title {
+  font-style: italic;
+}
+
+select {
+  display: block;
+  font-family: inherit;
+  font-size: 1em;
+  line-height: 1.25rem;
+  height: 1.75rem;
+  padding: 3px;
+  text-indent: 1.25px;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  appearance: none;
+  background: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23000000%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E")
+    no-repeat;
+  background-position: right 0.7em top 50%, 0 0;
+  background-color: white;
+  border-radius: 0;
+}
+
+select::-ms-expand {
+  display: none;
+}

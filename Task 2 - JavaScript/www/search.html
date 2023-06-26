@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Search | Artmart</title>
+</head>
+
+
+<body>
+  <header>
+    <a href="search.html">
+      <img src="artmart_logo.png" alt="Artmart" class="logo">
+    </a>
+    <nav>
+      <a href="search.html">Search</a>
+      <a href="cart.html" id="cart-link">Cart</a>
+    </nav>
+  </header>
+
+  <main>
+    <form role="search" class="search-form" id="search-form">
+      <input type="search" id="search" name="q" placeholder="Search the collection" aria-labelledby="searchbutton">
+      <button type="submit" id="searchbutton">Search</button>
+    </form>
+
+    <div id="search-info" class="search-info">
+      Search our collection of more than 400,000 artworks.
+    </div>
+
+    <section id="gallery" class="gallery">
+
+      <!--TODO: Use the HTML template below to populate the gallery with images-->
+      <!--
+        <div class="thumb">
+          <a href="" id="">
+            <img src="" alt="" id="">
+            <div class="museum-label">
+              <span class="artist"></span>
+              <span class="title"></span>,
+              <span class="date"></span>
+            </div>
+          </a>
+        </div>
+      -->
+
+    </section>
+  </main>
+      <script type="module">
+        import * as Cart from "./cart.js";
+        const highlightsData = await fetch('./highlights.json');
+        const rawHighlights = await highlightsData.json();
+        const highlights = rawHighlights.highlights;
+        artworkSearch(highlights);
+        const form = document.getElementById("search-form");
+
+        const itemsInCart = Cart.getCartItems();
+        let cartElement = document.getElementById("cart-link");
+        let numOfItemsInCart = itemsInCart.length;
+        if (numOfItemsInCart == 0){
+          cartElement.innerText = "Cart";
+        }else{
+          cartElement.innerText = `Cart (${numOfItemsInCart})`;
+        }
+        
+        form.addEventListener('submit', async event => {
+          event.preventDefault();
+      
+          const searchInput = document.getElementById('search');
+          const q = searchInput.value;
+          let searchInfo = document.getElementById('search-info');
+      
+          
+          if(!q) {
+            // Display artworks from highlights.json
+            const highlightsData = await fetch('./highlights.json');
+            const rawHighlights = await highlightsData.json();
+            const highlights = rawHighlights.highlights;
+            artworkSearch(highlights);
+            return; // Do nothing else
+          }
+          searchInfo.innerText = `Searching for "${q}"... where "${q}" is the search term`;
+          
+          const artworkObjectIDs = await retrieveArtworkObjectIDs(q); // Get all object IDs for the given search term
+          artworkSearch(artworkObjectIDs);
+          const numberOfArtworks = artworkObjectIDs.length;
+          if (numberOfArtworks == 1){
+            searchInfo.innerText = `Found ${numberOfArtworks} artwork for "${q}" where 1 is the number of results`;
+          }else{
+            searchInfo.innerText = `Found ${numberOfArtworks} artworks for "${q}" where ${numberOfArtworks} is the number of results`;
+          }
+        })
+      
+        class Artwork {
+          constructor (objectID, primaryImageSmall, title, artistDisplayName, objectDate){
+            this.objectID = objectID
+            this.primaryImageSmall = primaryImageSmall;
+            this.title = title;
+            this.artistDisplayName = artistDisplayName;
+            this.objectDate = objectDate;
+          }
+        }
+        
+        async function retrieveArtworkObjectIDs(searchTerm) {
+            // get artworks from https://collectionapi.metmuseum.org/public/collection/v1/search?q=<term>
+          const response = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${searchTerm}`);
+          const rawData = await response.json();
+          const artworks = [];
+          if(rawData.objectIDs === null){
+            return artworks;
+          }
+          // following loop adds all objectIDs that are returned by the query
+          for(let objectID of rawData.objectIDs){  
+            artworks.push(objectID); // Add each objectID to an array of IDs
+          }
+          return artworks;
+        }
+      
+        async function retrieveArtworks(artworkObjectIDs){
+          const artworks = [];
+          let c = 1;
+          for(let objectID of artworkObjectIDs){
+            if (c > 100){ break; } // Add just the first 100 results
+            let response = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`) // Get specific artwork
+            let rawData = await response.json();
+            // Add new object to array of artworks to be displayed
+            //if (rawData.primaryImageSmall !== undefined && rawData.primaryImageSmall !== null && rawData.primaryImageSmall !==""){
+              artworks.push(new Artwork(objectID, rawData.primaryImageSmall, rawData.title, rawData.artistDisplayName, rawData.objectDate)) 
+              c += 1;
+            //}
+            }
+            return artworks;
+        }
+      
+      
+          async function artworkSearch(artworkObjectIDs) {
+            const artworks = await retrieveArtworks(artworkObjectIDs);
+            // add artworks to document
+      
+            const gallery = document.getElementById('gallery')
+            gallery.innerHTML = "";
+            for(let artwork of artworks){
+              gallery.appendChild(createGalleryElement(artwork));
+            }
+          }
+      
+          function createGalleryElement(artwork) {
+            const gallery = document.getElementById("gallery");
+
+            const galleryItem = document.createElement('div');
+            galleryItem.innerHTML = `
+            <div class="thumb">
+              <a class="link" href="" id="">
+              <img src="" alt="" id="" image-info>
+              <div class="museum-label">
+                <span class="artist"></span>
+                <span class="title"></span>,
+                <span class="date"></span>
+              </div>
+              </a>
+            </div>`
+
+            const artist = galleryItem.getElementsByClassName("artist")[0];
+            artist.textContent = `${artwork.artistDisplayName}`;
+            
+            const img = galleryItem.querySelector("[image-info]")
+            img.src = artwork.primaryImageSmall;
+            img.alt = artwork.title;
+            img.id = artwork.objectID;
+            
+            const link = galleryItem.getElementsByClassName("link")[0];
+            link.href = "framing.html?id="+`${artwork.objectID}`;                
+          
+            const title = galleryItem.getElementsByClassName("title")[0];
+            title.textContent = `${artwork.title}, `;
+          
+            const date = galleryItem.getElementsByClassName("date")[0];
+            date.textContent = `${artwork.objectDate}`;
+          
+            gallery.appendChild(galleryItem);
+      
+            return galleryItem;
+        }
+      
+      </script>
+</body>
+
+</html>

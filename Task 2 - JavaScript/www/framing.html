@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Artmart</title>
+</head>
+
+<body>
+
+  <header>
+    <a href="search.html" title="Homepage">
+      <img src="artmart_logo.png" alt="Artmart" class="logo">
+    </a>
+    <nav>
+      <a href="search.html">Search</a>
+      <a href="cart.html" id="cart-link">Cart</a>
+    </nav>
+  </header>
+
+  <main class="framing-main">
+
+    <div id="preview-container" class="framing-preview">
+      <img id="preview-image" src=" " alt="" image-info>
+      <div id="image-label" class="museum-label"></div>
+    </div>
+
+    <form id="framing-form" class="framing-form museum-label">
+      <!-- Prevent implicit submission of the form -->
+      <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+
+      <input type="hidden" name="object-id" id="object-id">
+
+      <fieldset>
+        <legend>Print Size</legend>
+        <div class="segmented">
+          <input type="radio" name="printSize" id="print-size-s" value="S" onclick="render()">
+          <label for="print-size-s" id="print-size-s-label">Small<br>0 × 0 cm</label>
+          <input type="radio" name="printSize" id="print-size-m" value="M" checked onclick="render()">
+          <label for="print-size-m" id="print-size-m-label">Medium<br>0 × 0 cm</label>
+          <input type="radio" name="printSize" id="print-size-l" value="L" onclick="render()">
+          <label for="print-size-l" id="print-size-l-label">Large<br>0 × 0 cm</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Frame Width</legend>
+        <div class="framing-form-row">
+          <label>Frame</label>
+          <div>
+            <input type="number" name="frameWidth" min="2" max="5" value="2" step="0.1" aria-label="Frame Width" onchange="updateFrameWidth(this.value)">
+            cm
+          </div>
+        </div>
+        <input type="range" name="frameWidthR" min="2" max="5" value="2" step="0.1" aria-hidden="true" oninput="updateFrameWidth(this.value);">
+      </fieldset>
+
+      <fieldset>
+        <legend>Frame Style</legend>
+        <div class="frame-style-row">
+          <div class="frame-style-item">
+            <input type="radio" id="frame-style-classic" name="frameStyle" value="classic" checked onclick="render()">
+            <label for="frame-style-classic"><img src="frame-styles/classic-thumb.png" alt="Classic">Classic</label>
+          </div>
+          <div class="frame-style-item">
+            <input type="radio" id="frame-style-natural" name="frameStyle" value="natural" onclick="render()">
+            <label for="frame-style-natural"><img src="frame-styles/natural-thumb.png" alt="Natural">Natural</label>
+          </div>
+          <div class="frame-style-item">
+            <input type="radio" id="frame-style-shabby" name="frameStyle" value="shabby" onclick="render()">
+            <label for="frame-style-shabby"><img src="frame-styles/shabby-thumb.png" alt="Shabby">Shabby</label>
+          </div>
+          <div class="frame-style-item">
+            <input type="radio" id="frame-style-elegant" name="frameStyle" value="elegant" onclick="render()">
+            <label for="frame-style-elegant"><img src="frame-styles/elegant-thumb.png" alt="Elegant">Elegant</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Mat Width</legend>
+        <div class="framing-form-row">
+          <label>Mat</label>
+          <div>
+            <input type="number" name="matWidth" min="0" max="10" value="3" step="0.1" aria-label="Mat Width" onchange="updateMatWidth(this.value)">
+            cm
+          </div>
+        </div>
+        <input type="range" name="matWidthR" min="0" max="10" value="3" step="0.1" aria-hidden="true" oninput="updateMatWidth(this.value);">
+      </fieldset>
+
+      <fieldset>
+        <legend>Mat Color</legend>
+        <div class="mat-color-row">
+          <div class="mat-color-item">
+            <input type="radio" id="mat-color-tea" name="matColor" value="tea" onclick="render()">
+            <label for="mat-color-tea">Tea</label>
+          </div>
+          <div class="mat-color-item">
+            <input type="radio" id="mat-color-cerise" name="matColor" value="cerise" onclick="render()">
+            <label for="mat-color-cerise">Cerise</label>
+          </div>
+          <div class="mat-color-item">
+            <input type="radio" id="mat-color-cerulean" name="matColor" value="cerulean" checked onclick="render()">
+            <label for="mat-color-cerulean">Cerulean</label>
+          </div>
+          <div class="mat-color-item">
+            <input type="radio" id="mat-color-oxford" name="matColor" value="oxford" onclick="render()">
+            <label for="mat-color-oxford">Oxford</label>
+          </div>
+          <div class="mat-color-item">
+            <input type="radio" id="mat-color-raisin" name="matColor" value="raisin" onclick="render()">
+            <label for="mat-color-raisin">Raisin</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Price</legend>
+
+        <script>
+          function addToCart() {
+            const itemInfo = {
+              objectID: document.getElementById("preview-container").querySelector("img").id,
+              printSize: document.querySelector("input[name='printSize']:checked").value,
+              frameWidth: document.querySelector("input[name='frameWidth']").value * 10,
+              frameStyle: document.querySelector("input[name='frameStyle']:checked").value,
+              matWidth: document.querySelector("input[name='matWidth']").value * 10,
+              matColor: document.querySelector("input[name='matColor']:checked").value
+            };
+            if (!localStorage.getItem("cart")) {
+              localStorage.setItem("cart", "[]");
+            }
+            let cart = JSON.parse(localStorage.getItem("cart"));
+            cart.push(itemInfo);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.location.href = "cart.html";
+          };
+        </script>
+
+
+        <div class="framing-form-row">
+          <label for="price">Price (excl. shipping)</label>
+          <div>
+            <span id="price" class="price"></span>
+          </div>
+        </div>
+        <div class="framing-form-row">
+          <label for="total-size">Total Size (incl. frame and mat)</label>
+          <div id="total-size">0 × 0 cm</div>
+        </div>
+        <button type="button" class="buy" onclick="addToCart()">Add to Cart</button>
+      </fieldset>
+    </form>
+  </main>
+
+  <script type="module">
+    import * as Frame from './frame.js';
+    import * as Cart from './cart.js';
+
+    const url = new URL(window.location);
+    const searchParams = url.search.split("&");
+    const id = searchParams[0].substring(4);
+    const imageSource = undefined;
+
+    window.updateFrameWidth = function updateFrameWidth(w) {
+      const form = document.getElementById("framing-form");
+      var w = Math.round(clamp(w, 2, 5) * 10) / 10;
+      form.frameWidth.value = w;
+      form.frameWidthR.value = w;
+      render();
+    }
+
+    window.updateMatWidth = function updateMatWidth(w) {
+      const form = document.getElementById("framing-form");
+      var w = Math.round(clamp(w, 0, 10) * 10) / 10;
+      form.matWidth.value = w;
+      form.matWidthR.value = w;
+      render();
+    }
+
+    getArtwork(id);
+  
+    async function getArtwork (id){
+      const rawData = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`);
+      const rawDataJSON = await rawData.json();
+      if (rawDataJSON.message == "ObjectID not found"){
+        window.location.replace("./search.html");
+      }
+
+      
+      const label = document.getElementById("image-label");
+      
+      const artist = document.createElement('span');
+      artist.className = 'artist';
+      artist.textContent = `${rawDataJSON.artistDisplayName}`;
+      
+      const title = document.createElement('span');
+      title.className = 'title';
+      title.textContent = `${rawDataJSON.title}, `;
+      
+      const date = document.createElement('span');
+      date.className = 'date';
+      date.textContent = `${rawDataJSON.objectDate}`;
+      
+      label.appendChild(artist);
+      label.appendChild(title);
+      label.appendChild(date);
+      
+      const image = document.querySelector("[image-info]");
+      image.id = rawDataJSON.objectID;
+      image.alt = rawDataJSON.title
+      image.src = rawDataJSON.primaryImageSmall;
+
+      render();
+    }
+
+    function clamp(x, min, max) {
+      return Math.min(Math.max(x, min), max);
+    }
+
+    window.render = function () {
+      // render picture frame
+
+      const previewContainer = document.getElementById("preview-container");
+      console.log(previewContainer);
+
+      const previewImg = previewContainer.querySelector("img");
+      console.log(previewImg);
+      
+      const label = document.getElementById("image-label");
+      console.log(label)
+      
+      
+      
+      const printSize = document.querySelector("input[name='printSize']:checked").value;
+      const frameStyle = document.querySelector("input[name='frameStyle']:checked").value;
+      const frameWidth = 10 * document.querySelector("input[name='frameWidth']").value;
+      const matColor = document.querySelector("input[name='matColor']:checked").value;
+      const matWidth = 10 * document.querySelector("input[name='matWidth']").value;
+      
+      
+      // Render the image using the above calculated values
+      Frame.render(previewImg, previewContainer, label, printSize, frameStyle, frameWidth, matColor, matWidth);
+
+
+
+      // Update print sizes
+      const printSizes = Frame.getPrintSizes(previewImg);
+      const totalWidth = printSizes[printSize][0] + 2 * frameWidth + 2 * matWidth;
+      const totalHeight = printSizes[printSize][1] + 2 * frameWidth + 2 * matWidth;
+      document.getElementById("print-size-s-label").innerHTML = `Small <br>${printSizes['S'][0] / 10} × ${printSizes['S'][1] / 10} cm`
+      document.getElementById("print-size-m-label").innerHTML = `Medium<br>${printSizes['M'][0] / 10} × ${printSizes['M'][1] / 10} cm`
+      document.getElementById("print-size-l-label").innerHTML = `Large <br>${printSizes['L'][0] / 10} × ${printSizes['L'][1] / 10} cm`
+      document.getElementById('total-size').innerHTML = `${totalWidth / 10} × ${totalHeight / 10} cm`;
+
+      // Update the price
+      let newPrice = (Frame.calculatePrice(printSize, frameStyle, frameWidth, matWidth) / 100).toFixed(2);
+      document.querySelector("#price").innerText = `€ ${newPrice}`;
+    }
+
+
+    // Count number of items in cart
+    const itemsInCart = Cart.getCartItems();
+    let cartElement = document.getElementById("cart-link");
+    let numOfItemsInCart = itemsInCart.length;
+    if (numOfItemsInCart == 0){
+      cartElement.innerText = "Cart";
+    }else{
+      cartElement.innerText = `Cart (${numOfItemsInCart})`;
+    }
+    async function fetchObjectInfo(objectID) {
+  const apiUrl = "https://collectionapi.metmuseum.org/public/collection/v1/objects/";
+
+  const headers = new Headers();
+  headers.append("cache-control", "private, max-age = 600");
+  headers.append("test", "private, max-age = 600");
+
+  const request = new Request(apiUrl + objectID, {
+    method: "GET",
+    headers: headers,
+    mode: "cors",
+    cache: "force-cache",
+  });
+
+  const cachedResponse = await caches.open("v1").then((cache) => cache.match(request));
+  if (cachedResponse !== undefined) {
+    const objectInfo = await cachedResponse.json();
+    loadObjectImage(objectInfo);
+  } else {
+    const fetchedResponse = await fetch(request)
+      .then((response) => {
+        if (response.status != 200) {
+          window.location.href = "search.html";
+        }
+        return caches.open("v1").then((cache) => cache.put(request, response));
+      })
+      .then(async function () {
+        const cachedValue = await caches.open("v1").then((cache) => cache.match(request));
+        return cachedValue.json();
+      })
+      .catch((error) => console.log(error));
+    loadObjectImage(fetchedResponse);
+  }
+}
+
+
+
+
+
+
+
+
+
+    // Add an event listener to listen for resizing
+    window.addEventListener("resize", render);
+
+
+
+  </script>
+</body>
+
+</html>

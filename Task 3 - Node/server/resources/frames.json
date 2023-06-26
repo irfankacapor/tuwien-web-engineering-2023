@@ -1,0 +1,42 @@
+[
+  {
+    "id": "classic",
+    "label": "Classic",
+    "image": "frame-styles/classic-thumb.png",
+    "border": {
+      "slice": 115,
+      "image": "frame-styles/classic.jpg"
+    },
+    "cost": 110
+  },
+  {
+    "id": "natural",
+    "label": "Natural",
+    "image": "frame-styles/natural-thumb.png",
+    "border": {
+      "slice": 75,
+      "image": "frame-styles/natural.jpg"
+    },
+    "cost": 85
+  },
+  {
+    "id": "shabby",
+    "label": "Shabby",
+    "image": "frame-styles/shabby-thumb.png",
+    "border": {
+      "slice": 120,
+      "image": "frame-styles/shabby.jpg"
+    },
+    "cost": 100
+  },
+  {
+    "id": "elegant",
+    "label": "Elegant",
+    "image": "frame-styles/elegant-thumb.png",
+    "border": {
+      "slice": 107,
+      "image": "frame-styles/elegant.jpg"
+    },
+    "cost": 90
+  }
+]

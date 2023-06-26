@@ -1,0 +1,27 @@
+[
+  {
+    "id": "tea",
+    "label": "Tea",
+    "color": "#D4E4BC"
+  },
+  {
+    "id": "cerise",
+    "label": "Cerise",
+    "color": "#E34A6F"
+  },
+  {
+    "id": "cerulean",
+    "label": "Cerulean",
+    "color": "#407899"
+  },
+  {
+    "id": "oxford",
+    "label": "Oxford",
+    "color": "#0B132B"
+  },
+  {
+    "id": "raisin",
+    "label": "Raisin",
+    "color": "#221D23"
+  }
+]
