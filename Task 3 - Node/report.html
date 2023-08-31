@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>A3 Test Report</title>
+  <style>
+    :root {
+      --sans: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+      --mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+    }
+
+    body {
+      font-family: var(--sans);
+      margin: 4rem;
+    }
+
+    pre {
+      font-family: var(--mono);
+      white-space: pre-wrap;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-spacing: 0;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+
+    td {
+      border-top: 1px solid black;
+      padding: 0.5em 0;
+      word-wrap: break-word;
+    }
+
+    tr.test {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .passed {
+      background-color: lightgreen;
+    }
+
+    .passed>td:first-child::before {
+      content: '✓';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .failed {
+      background-color: lightcoral;
+    }
+
+    .failed>td:first-child::before {
+      content: '✘';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .pending {
+      background-color: gainsboro;
+    }
+
+    .pending>td:first-child::before {
+      content: '?';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .error>td {
+      padding: 1em;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+    }
+
+    .points {
+      text-align: right;
+      width: 5ch;
+      padding-right: 1em;
+      padding-left: 1em;
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+
+    x-rand {
+      background-color: lightgoldenrodyellow;
+    }
+
+    x-user {
+      background-color: aliceblue;
+    }
+
+    details {
+      display: block;
+      word-wrap: break-word;
+      margin: 0.5em 1em;
+    }
+
+    details > details {
+      margin-left: 1.5em;
+    }
+
+    summary {
+      outline: none;
+      cursor: pointer;
+    }
+
+    .description {
+      display: inline;
+    }
+
+    .description::before {
+      content: '☑ ';
+    }
+
+    .info {
+      font-size: small;
+      margin-left: 1.75em;
+      margin-top: 0.5em;
+    }
+
+    .info ul {
+      padding-left: 1.5em;
+    }
+
+    details.empty {
+      pointer-events: none;
+    }
+
+    details.empty>summary::-webkit-details-marker,
+    details.empty>summary::marker {
+      color: white;
+    }
+
+    td>details:last-child>summary>.description,
+    td>details:last-child>details:last-child>summary>.description {
+      color: red;
+    }
+
+    td>details:last-child>summary>.description::before,
+    td>details:last-child>details:last-child>summary>.description::before {
+      content: '☒ ';
+    }
+  </style>
+  <script>
+    function toggle(e) {
+      const x = e.nextElementSibling;
+      if (x.style.display == 'block') {
+        x.style.display = 'none';
+        e.innerText = 'show';
+      } else {
+        x.style.display = 'block';
+        e.innerText = 'hide';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('td > details:last-child').forEach((e) => e.open = true);
+      document.querySelectorAll('td > details:last-child > details:last-child').forEach((e) => e.open = true);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>A3 Test Report<span style="float: right;">11.5 points </span></h1>
+  2023-08-31 14:16:27 UTC<br>
+  36 tests &mdash; 29 passed / 7 failed<br>
+  <br>
+  15 points<br>
+  &minus;3.5 points for failed tests<br>
+  = 11.5 points total<br>
+  <br>
+  Seed: <code>1</code><br>
+  <small>(used to generate <x-rand>random input values</x-rand>)</small><br>
+
+  <h2>Artworks</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>101 &mdash; Artwork</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>102 &mdash; Unknown artwork</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>103 &mdash; Artwork cache</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>104 &mdash; Highlights</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>105 &mdash; Highlights cache</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>106 &mdash; Search</td>
+      <td class="points">&minus;0.5</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start app server</div>
+          </summary>
+          <div class="info"><pre>process.env.ARTMART_BASE_URL = '<x-rand>https://zin.test</x-rand>';
+process.env.BLING_API_KEY = '<x-rand>ak_EO5VYJBWsCXPsmi_XsDut</x-rand>';
+
+const app = require('./app');
+app.listen(0);</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting requests to the Met API</div>
+          </summary>
+          <div class="info"><ul><li>All <code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li>
+<li>All other requests will result in a response of <code>501 Not Implemented</code>.</li></ul></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">search for <code><x-rand>bowerbird</x-rand></code></div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>GET</code> request to <code>/artworks?q=<x-rand>bowerbird</x-rand></code></div>
+            </summary>
+            <div class="info"><pre>GET /artworks?q=<x-rand>bowerbird</x-rand> HTTP/1.1
+Host: localhost:53753
+</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 2
+ETag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+[]</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect search results to match corresponding Met search results</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected:
+  [
+    {
+      &quot;artworkId&quot;: 203305,
+      &quot;title&quot;: &quot;Baptacke jihe&quot;,
+      &quot;artist&quot;: &quot;Bobby Morton&quot;,
+      &quot;date&quot;: &quot;1667&quot;,
+      &quot;image&quot;: &quot;https:&#x2F;&#x2F;images.example.com&#x2F;H12330.jpg&quot;
+    },
+    {
+      &quot;artworkId&quot;: 918204,
+      &quot;title&quot;: &quot;Nip waeho otviwug bevkog dirlafi difbelo&quot;,
+      &quot;artist&quot;: &quot;Ethan Kevin Lawrence&quot;,
+      &quot;date&quot;: &quot;1692&quot;,
+      &quot;image&quot;: &quot;https:&#x2F;&#x2F;images.example.com&#x2F;6N7R82.jpg&quot;
+    },
+    {
+      &quot;artworkId&quot;: 109471,
+      &quot;title&quot;: &quot;Ludaz&quot;,
+      &quot;artist&quot;: &quot;Norman David Stevenson&quot;,
+      &quot;date&quot;: &quot;1650&quot;,
+      &quot;image&quot;: &quot;https:&#x2F;&#x2F;images.example.com&#x2F;W7G1N2.jpg&quot;
+    },
+    {
+      &quot;artworkId&quot;: 306328,
+      &quot;title&quot;: &quot;Guclaslam muv ju tas dec nusbil&quot;,
+      &quot;artist&quot;: &quot;Bradley Erik Estrada&quot;,
+      &quot;date&quot;: &quot;1935&quot;,
+      &quot;image&quot;: &quot;https:&#x2F;&#x2F;images.example.com&#x2F;LK23D0.jpg&quot;
+    }
+  ]
+
+Received:
+  []</td>
+    </tr>
+
+    <tr class="test passed">
+      <td>107 &mdash; Search without results</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>108 &mdash; Search cache</td>
+      <td class="points">&minus;0.5</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start app server</div>
+          </summary>
+          <div class="info"><pre>process.env.ARTMART_BASE_URL = '<x-rand>https://pirgis.test</x-rand>';
+process.env.BLING_API_KEY = '<x-rand>ak_FtVX-_IFSajDAT1-v6DcK</x-rand>';
+
+const app = require('./app');
+app.listen(0);</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting requests to the Met API</div>
+          </summary>
+          <div class="info"><ul><li>All <code>GET</code> requests to relevant parts of the Met API will return <x-rand>random</x-rand> responses.</li>
+<li>All other requests will result in a response of <code>501 Not Implemented</code>.</li></ul></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">search for <code><x-rand>cricket</x-rand></code></div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>GET</code> request to <code>/artworks?q=<x-rand>cricket</x-rand></code></div>
+            </summary>
+            <div class="info"><pre>GET /artworks?q=<x-rand>cricket</x-rand> HTTP/1.1
+Host: localhost:53777
+</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 2
+ETag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+[]</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect search results to match corresponding Met search results</div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected:
+  [
+    {
+      &quot;artworkId&quot;: 786747,
+      &quot;title&quot;: &quot;Gubu sovkew iwetulsiz hiusame bascug uja cuveco puvire kac onappep&quot;,
+      &quot;artist&quot;: &quot;Lester Padilla&quot;,
+      &quot;date&quot;: &quot;1578&quot;,
+      &quot;image&quot;: &quot;https:&#x2F;&#x2F;images.example.com&#x2F;UEQPAN.jpg&quot;
+    },
+    {
+      &quot;artworkId&quot;: 945549,
+      &quot;title&quot;: &quot;Cuup bu fevredesu mu wahadsev vifjigge med ebetif&quot;,
+      &quot;artist&quot;: &quot;Benjamin Paul Parker&quot;,
+      &quot;date&quot;: &quot;1986&quot;,
+      &quot;image&quot;: &quot;https:&#x2F;&#x2F;images.example.com&#x2F;3CF82Q.jpg&quot;
+    },
+    {
+      &quot;artworkId&quot;: 350345,
+      &quot;title&quot;: &quot;Jinu jismesep areuc aznur fes vevora&quot;,
+      &quot;artist&quot;: &quot;Cecelia Olga Logan&quot;,
+      &quot;date&quot;: &quot;1551&quot;,
+      &quot;image&quot;: &quot;https:&#x2F;&#x2F;images.example.com&#x2F;0I4GR7.jpg&quot;
+    }
+  ]
+
+Received:
+  []</td>
+    </tr>
+
+  </table>
+  <h2>Cart</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>201 &mdash; Create cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>202 &mdash; Add one item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>203 &mdash; Add two items</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>204 &mdash; Unnecessary fields</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>205 &mdash; Validation</td>
+      <td class="points">&minus;0.5</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start app server</div>
+          </summary>
+          <div class="info"><pre>process.env.ARTMART_BASE_URL = '<x-rand>https://pubsav.test</x-rand>';
+process.env.BLING_API_KEY = '<x-rand>ak_znWLvqZc1Qd7Ed5VkO-BN</x-rand>';
+
+const app = require('./app');
+app.listen(0);</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">create new cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>GET</code> request to <code>/cart</code></div>
+            </summary>
+            <div class="info"><pre>GET /cart HTTP/1.1
+Host: localhost:53745
+</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Set-Cookie: sessionId=AIjL-qiXwxTgOLOdHxmCM; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 2
+ETag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+[]</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain session cookie</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect JSON payload to be an empty cart</div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">send <code>POST</code> request to <code>/cart</code> with cookie and JSON payload</div>
+          </summary>
+          <div class="info"><pre>POST /cart HTTP/1.1
+Host: localhost:53745
+Cookie: sessionId=<x-user>AIjL-qiXwxTgOLOdHxmCM</x-user>
+Content-Type: application/json
+Content-Length: 124
+
+{
+  "artworkId": <x-rand>197195</x-rand>,
+  "printSize": "<x-rand>M</x-rand>",
+  "frameStyle": "<x-rand>elegant</x-rand>",
+  "matWidth": <x-rand>5091379698991104</x-rand>,
+  "matColor": "<x-rand>ni</x-rand>"
+}</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">receive response</div>
+          </summary>
+          <div class="info"><pre>HTTP/1.1 201 Created
+X-Powered-By: Express
+Set-Cookie: sessionId=AIjL-qiXwxTgOLOdHxmCM; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-Nk7hpRoDjGq6R9hoZEQ2eqLt39U"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"cartItemId":1}</pre></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect response status to be <code>400 Bad Request</code></div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected: 400 Bad Request
+Received: 201 Created</td>
+    </tr>
+
+    <tr class="test passed">
+      <td>206 &mdash; Multiple carts</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>207 &mdash; Clear cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>208 &mdash; Get item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>209 &mdash; Get unknown item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>210 &mdash; Remove item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>211 &mdash; Remove unknown item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>212 &mdash; Missing session</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>213 &mdash; Invalid session</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Checkout</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>301 &mdash; Create payment intent</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>302 &mdash; Missing session for checkout</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>303 &mdash; Invalid session for checkout</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>304 &mdash; Checkout with empty cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>305 &mdash; Invalid customer information</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test failed">
+      <td>306 &mdash; Order receipt</td>
+      <td class="points">&minus;0.5</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start app server</div>
+          </summary>
+          <div class="info"><pre>process.env.ARTMART_BASE_URL = '<x-rand>https://mak.test</x-rand>';
+process.env.BLING_API_KEY = '<x-rand>ak_S4ayyBMf0b45kpWQm-Vvw</x-rand>';
+
+const app = require('./app');
+app.listen(0);</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting requests to the Bling API</div>
+          </summary>
+          <div class="info"><ul><li>All requests to relevant parts of the Bling API will return internally consistent mock responses.</li>
+<li>All other requests will result in a response of <code>501 Not Implemented</code>.</li></ul></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">create new cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>GET</code> request to <code>/cart</code></div>
+            </summary>
+            <div class="info"><pre>GET /cart HTTP/1.1
+Host: localhost:53755
+</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Set-Cookie: sessionId=FyYl9B91XNyfIEE36yoPQ; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 2
+ETag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+[]</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain session cookie</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect JSON payload to be an empty cart</div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">add item to cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart HTTP/1.1
+Host: localhost:53755
+Cookie: sessionId=<x-user>FyYl9B91XNyfIEE36yoPQ</x-user>
+Content-Type: application/json
+Content-Length: 136
+
+{
+  "artworkId": <x-rand>806551</x-rand>,
+  "printSize": "<x-rand>S</x-rand>",
+  "frameStyle": "<x-rand>elegant</x-rand>",
+  "frameWidth": <x-rand>49</x-rand>,
+  "matWidth": <x-rand>10</x-rand>,
+  "matColor": "<x-rand>cerulean</x-rand>"
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 201 Created
+X-Powered-By: Express
+Set-Cookie: sessionId=FyYl9B91XNyfIEE36yoPQ; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-Nk7hpRoDjGq6R9hoZEQ2eqLt39U"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"cartItemId":1}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>201 Created</code></div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">add item to cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart HTTP/1.1
+Host: localhost:53755
+Cookie: sessionId=<x-user>FyYl9B91XNyfIEE36yoPQ</x-user>
+Content-Type: application/json
+Content-Length: 108
+
+{
+  "artworkId": <x-rand>575538</x-rand>,
+  "printSize": "<x-rand>S</x-rand>",
+  "frameStyle": "<x-rand>shabby</x-rand>",
+  "frameWidth": <x-rand>48</x-rand>,
+  "matWidth": <x-rand>0</x-rand>
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 201 Created
+X-Powered-By: Express
+Set-Cookie: sessionId=FyYl9B91XNyfIEE36yoPQ; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-NOA92BQEISd87j7eI+0NQu1dPMI"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"cartItemId":2}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>201 Created</code></div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">initiate checkout</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart/checkout</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart/checkout HTTP/1.1
+Host: localhost:53755
+Cookie: sessionId=<x-user>FyYl9B91XNyfIEE36yoPQ</x-user>
+Content-Type: application/json
+Content-Length: 203
+
+{
+  "email": "<x-rand>tewel@example.com</x-rand>",
+  "shipping_address": {
+    "name": "<x-rand>Isabella Mendoza</x-rand>",
+    "address": "<x-rand>1397 Nawe Manor</x-rand>",
+    "city": "<x-rand>Wepikbof</x-rand>",
+    "country": "<x-rand>DE</x-rand>",
+    "postal_code": "<x-rand>TW9 5MR</x-rand>"
+  }
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 123
+ETag: W/"7b-ffAio3ziHy3cY4tOcNdWLwBdPxo"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"payment_intent_id":"pi_wUulWHn37ty2VbT1KQaD-","client_secret":"cs_ptBiFt_AAhQguP1m52Ipl","amount":16260,"currency":"eur"}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect a Bling payment intent to have been created</div>
+            </summary>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">expect response to match the corresponding Bling payment intent</div>
+            </summary>
+            <div class="info">The payment intent object returned by the (mock) Bling API was <pre>{
+  "id": "<x-rand>pi_wUulWHn37ty2VbT1KQaD-</x-rand>",
+  "created_at": &quot;2023-08-31T14:16:30.412Z&quot;,
+  "amount": <x-user>16260</x-user>,
+  "currency": "<x-user>eur</x-user>",
+  "client_secret": "<x-rand>cs_ptBiFt_AAhQguP1m52Ipl</x-rand>",
+  "webhook": "<x-user>https://mak.test/cart/checkout/payment-update</x-user>",
+  "status": "created"
+}</pre></div>
+          </details>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">inspect <code>orders</code> directory</div>
+          </summary>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">simulate a successful payment</div>
+          </summary>
+          <div class="info">A (simulated) client has sent a <code>POST</code> request to the (mock) Bling server endpoint <code>/payment_intents/<x-rand>pi_wUulWHn37ty2VbT1KQaD-</x-rand>/confirm</code> with the following payload: <pre>{
+  "client_secret": "<x-rand>cs_ptBiFt_AAhQguP1m52Ipl</x-rand>",
+  "cardholder": "<x-rand>Fanny Garcia</x-rand>",
+  "cardnumber": "<x-rand>201443131885948</x-rand>",
+  "exp_month": <x-rand>7</x-rand>,
+  "exp_year": <x-rand>2028</x-rand>,
+  "cvc": <x-rand>846</x-rand>
+}</pre>Bling will accept the payment and send an event to the corresponding webhook.</div>
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart/checkout/payment-update</code> with JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart/checkout/payment-update HTTP/1.1
+Host: localhost:53755
+Content-Type: application/json
+Content-Length: 532
+
+{
+  "id": "<x-rand>ev_tPN2S9wZ_8AgfdKyKXSSw</x-rand>",
+  "created_at": &quot;2023-08-31T14:16:30.414Z&quot;,
+  "type": "payment.succeeded",
+  "payment_intent": {
+    "id": "<x-rand>pi_wUulWHn37ty2VbT1KQaD-</x-rand>",
+    "created_at": &quot;2023-08-31T14:16:30.412Z&quot;,
+    "amount": <x-user>16260</x-user>,
+    "currency": "<x-user>eur</x-user>",
+    "client_secret": "<x-rand>cs_ptBiFt_AAhQguP1m52Ipl</x-rand>",
+    "webhook": "<x-user>https://mak.test/cart/checkout/payment-update</x-user>",
+    "status": "succeeded",
+    "card": {
+      "cardholder": "<x-rand>Fanny Garcia</x-rand>",
+      "last4": "<x-rand>5948</x-rand>",
+      "exp_month": <x-rand>7</x-rand>,
+      "exp_year": <x-rand>2028</x-rand>
+    }
+  }
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 403 Forbidden
+X-Powered-By: Express
+Content-Type: text/plain; charset=utf-8
+Content-Length: 9
+ETag: W/"9-PatfYBLj4Um1qTm5zrukoLhNyPU"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+Forbidden</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>204 No Content</code></div>
+            </summary>
+          </details>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected: 204 No Content
+Received: 403 Forbidden</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>307 &mdash; Clear cart after checkout</td>
+      <td class="points">&minus;0.5</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start app server</div>
+          </summary>
+          <div class="info"><pre>process.env.ARTMART_BASE_URL = '<x-rand>https://vebsadco.test</x-rand>';
+process.env.BLING_API_KEY = '<x-rand>ak_jPOopPgcV3f9I62BVodfq</x-rand>';
+
+const app = require('./app');
+app.listen(0);</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting requests to the Bling API</div>
+          </summary>
+          <div class="info"><ul><li>All requests to relevant parts of the Bling API will return internally consistent mock responses.</li>
+<li>All other requests will result in a response of <code>501 Not Implemented</code>.</li></ul></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">create new cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>GET</code> request to <code>/cart</code></div>
+            </summary>
+            <div class="info"><pre>GET /cart HTTP/1.1
+Host: localhost:53770
+</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Set-Cookie: sessionId=WjV0TD1iPW9DC1BajTo41; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 2
+ETag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+[]</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain session cookie</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect JSON payload to be an empty cart</div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">add item to cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart HTTP/1.1
+Host: localhost:53770
+Cookie: sessionId=<x-user>WjV0TD1iPW9DC1BajTo41</x-user>
+Content-Type: application/json
+Content-Length: 130
+
+{
+  "artworkId": <x-rand>436669</x-rand>,
+  "printSize": "<x-rand>M</x-rand>",
+  "frameStyle": "<x-rand>natural</x-rand>",
+  "frameWidth": <x-rand>36</x-rand>,
+  "matWidth": <x-rand>4</x-rand>,
+  "matColor": "<x-rand>tea</x-rand>"
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 201 Created
+X-Powered-By: Express
+Set-Cookie: sessionId=WjV0TD1iPW9DC1BajTo41; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-Nk7hpRoDjGq6R9hoZEQ2eqLt39U"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"cartItemId":1}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>201 Created</code></div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">initiate checkout</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart/checkout</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart/checkout HTTP/1.1
+Host: localhost:53770
+Cookie: sessionId=<x-user>WjV0TD1iPW9DC1BajTo41</x-user>
+Content-Type: application/json
+Content-Length: 234
+
+{
+  "email": "<x-rand>bojibro@example.com</x-rand>",
+  "shipping_address": {
+    "name": "<x-rand>Harold Gonzales</x-rand>",
+    "address": "<x-rand>617 Talej Circle</x-rand>",
+    "city": "<x-rand>Cemazu</x-rand>",
+    "country": "<x-rand>DE</x-rand>",
+    "postal_code": "<x-rand>CM3 3VA</x-rand>",
+    "phone": "<x-rand>(367) 742-3441</x-rand>"
+  }
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 123
+ETag: W/"7b-xhCEHIvqs65VrspSeWWgKUQ04eo"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"payment_intent_id":"pi_xE8esc7kmuZqwmLEfi35T","client_secret":"cs_zkIMcLsKv8UFDJddoU7XN","amount":14960,"currency":"eur"}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect a Bling payment intent to have been created</div>
+            </summary>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">expect response to match the corresponding Bling payment intent</div>
+            </summary>
+            <div class="info">The payment intent object returned by the (mock) Bling API was <pre>{
+  "id": "<x-rand>pi_xE8esc7kmuZqwmLEfi35T</x-rand>",
+  "created_at": &quot;2023-08-31T14:16:30.486Z&quot;,
+  "amount": <x-user>14960</x-user>,
+  "currency": "<x-user>eur</x-user>",
+  "client_secret": "<x-rand>cs_zkIMcLsKv8UFDJddoU7XN</x-rand>",
+  "webhook": "<x-user>https://vebsadco.test/cart/checkout/payment-update</x-user>",
+  "status": "created"
+}</pre></div>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">simulate a successful payment</div>
+          </summary>
+          <div class="info">A (simulated) client has sent a <code>POST</code> request to the (mock) Bling server endpoint <code>/payment_intents/<x-rand>pi_xE8esc7kmuZqwmLEfi35T</x-rand>/confirm</code> with the following payload: <pre>{
+  "client_secret": "<x-rand>cs_zkIMcLsKv8UFDJddoU7XN</x-rand>",
+  "cardholder": "<x-rand>Helen Fisher</x-rand>",
+  "cardnumber": "<x-rand>6287864049697527</x-rand>",
+  "exp_month": <x-rand>2</x-rand>,
+  "exp_year": <x-rand>2024</x-rand>,
+  "cvc": <x-rand>142</x-rand>
+}</pre>Bling will accept the payment and send an event to the corresponding webhook.</div>
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart/checkout/payment-update</code> with JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart/checkout/payment-update HTTP/1.1
+Host: localhost:53770
+Content-Type: application/json
+Content-Length: 537
+
+{
+  "id": "<x-rand>ev_JU57RuVwDVMQ0RmohFe1X</x-rand>",
+  "created_at": &quot;2023-08-31T14:16:30.487Z&quot;,
+  "type": "payment.succeeded",
+  "payment_intent": {
+    "id": "<x-rand>pi_xE8esc7kmuZqwmLEfi35T</x-rand>",
+    "created_at": &quot;2023-08-31T14:16:30.486Z&quot;,
+    "amount": <x-user>14960</x-user>,
+    "currency": "<x-user>eur</x-user>",
+    "client_secret": "<x-rand>cs_zkIMcLsKv8UFDJddoU7XN</x-rand>",
+    "webhook": "<x-user>https://vebsadco.test/cart/checkout/payment-update</x-user>",
+    "status": "succeeded",
+    "card": {
+      "cardholder": "<x-rand>Helen Fisher</x-rand>",
+      "last4": "<x-rand>7527</x-rand>",
+      "exp_month": <x-rand>2</x-rand>,
+      "exp_year": <x-rand>2024</x-rand>
+    }
+  }
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 403 Forbidden
+X-Powered-By: Express
+Content-Type: text/plain; charset=utf-8
+Content-Length: 9
+ETag: W/"9-PatfYBLj4Um1qTm5zrukoLhNyPU"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+Forbidden</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>204 No Content</code></div>
+            </summary>
+          </details>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected: 204 No Content
+Received: 403 Forbidden</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>308 &mdash; Failed payment</td>
+      <td class="points">&minus;0.5</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start app server</div>
+          </summary>
+          <div class="info"><pre>process.env.ARTMART_BASE_URL = '<x-rand>https://akupohva.test</x-rand>';
+process.env.BLING_API_KEY = '<x-rand>ak_RbL_P2BvvjryMNYSCtff-</x-rand>';
+
+const app = require('./app');
+app.listen(0);</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting requests to the Bling API</div>
+          </summary>
+          <div class="info"><ul><li>All requests to relevant parts of the Bling API will return internally consistent mock responses.</li>
+<li>All other requests will result in a response of <code>501 Not Implemented</code>.</li></ul></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">create new cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>GET</code> request to <code>/cart</code></div>
+            </summary>
+            <div class="info"><pre>GET /cart HTTP/1.1
+Host: localhost:53784
+</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Set-Cookie: sessionId=qW72nKgJBELu832mlJRX8; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 2
+ETag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+[]</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain session cookie</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect JSON payload to be an empty cart</div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">add item to cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart HTTP/1.1
+Host: localhost:53784
+Cookie: sessionId=<x-user>qW72nKgJBELu832mlJRX8</x-user>
+Content-Type: application/json
+Content-Length: 133
+
+{
+  "artworkId": <x-rand>825954</x-rand>,
+  "printSize": "<x-rand>M</x-rand>",
+  "frameStyle": "<x-rand>elegant</x-rand>",
+  "frameWidth": <x-rand>45</x-rand>,
+  "matWidth": <x-rand>9</x-rand>,
+  "matColor": "<x-rand>raisin</x-rand>"
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 201 Created
+X-Powered-By: Express
+Set-Cookie: sessionId=qW72nKgJBELu832mlJRX8; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-Nk7hpRoDjGq6R9hoZEQ2eqLt39U"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"cartItemId":1}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>201 Created</code></div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">add item to cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart HTTP/1.1
+Host: localhost:53784
+Cookie: sessionId=<x-user>qW72nKgJBELu832mlJRX8</x-user>
+Content-Type: application/json
+Content-Length: 132
+
+{
+  "artworkId": <x-rand>696098</x-rand>,
+  "printSize": "<x-rand>S</x-rand>",
+  "frameStyle": "<x-rand>shabby</x-rand>",
+  "frameWidth": <x-rand>36</x-rand>,
+  "matWidth": <x-rand>7</x-rand>,
+  "matColor": "<x-rand>cerise</x-rand>"
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 201 Created
+X-Powered-By: Express
+Set-Cookie: sessionId=qW72nKgJBELu832mlJRX8; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-NOA92BQEISd87j7eI+0NQu1dPMI"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"cartItemId":2}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>201 Created</code></div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">get cart</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>GET</code> request to <code>/cart</code> with cookie</div>
+            </summary>
+            <div class="info"><pre>GET /cart HTTP/1.1
+Host: localhost:53784
+Cookie: sessionId=<x-user>qW72nKgJBELu832mlJRX8</x-user>
+</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Set-Cookie: sessionId=qW72nKgJBELu832mlJRX8; Path=/
+Content-Type: application/json; charset=utf-8
+Content-Length: 275
+ETag: W/"113-gCZzoMr5DyHAt67cJWV3/Az3BEA"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+[{"cartItemId":1,"price":15190,"artworkId":825954,"printSize":"M","frameStyle":"elegant","frameWidth":45,"matWidth":9,"matColor":"raisin"},{"cartItemId":2,"price":7135,"artworkId":696098,"printSize":"S","frameStyle":"shabby","frameWidth":36,"matWidth":7,"matColor":"cerise"}]</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">initiate checkout</div>
+          </summary>
+          
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart/checkout</code> with cookie and JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart/checkout HTTP/1.1
+Host: localhost:53784
+Cookie: sessionId=<x-user>qW72nKgJBELu832mlJRX8</x-user>
+Content-Type: application/json
+Content-Length: 198
+
+{
+  "email": "<x-rand>li@example.com</x-rand>",
+  "shipping_address": {
+    "name": "<x-rand>Manuel Valdez</x-rand>",
+    "address": "<x-rand>1172 Jeum Street</x-rand>",
+    "city": "<x-rand>Omlaras</x-rand>",
+    "country": "<x-rand>GB</x-rand>",
+    "postal_code": "<x-rand>TS9W 8JT</x-rand>"
+  }
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 123
+ETag: W/"7b-/r/5LtbKNDuNmgcAULVm5uhM/os"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+{"payment_intent_id":"pi_xPRR-TI8UZW-KiTIT1J52","client_secret":"cs_SNpj5ts8vUDpD2nJgHt_c","amount":25325,"currency":"eur"}</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>200 OK</code></div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response to contain JSON payload</div>
+            </summary>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect a Bling payment intent to have been created</div>
+            </summary>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">expect response to match the corresponding Bling payment intent</div>
+            </summary>
+            <div class="info">The payment intent object returned by the (mock) Bling API was <pre>{
+  "id": "<x-rand>pi_xPRR-TI8UZW-KiTIT1J52</x-rand>",
+  "created_at": &quot;2023-08-31T14:16:30.560Z&quot;,
+  "amount": <x-user>25325</x-user>,
+  "currency": "<x-user>eur</x-user>",
+  "client_secret": "<x-rand>cs_SNpj5ts8vUDpD2nJgHt_c</x-rand>",
+  "webhook": "<x-user>https://akupohva.test/cart/checkout/payment-update</x-user>",
+  "status": "created"
+}</pre></div>
+          </details>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">inspect <code>orders</code> directory</div>
+          </summary>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">simulate a failed payment</div>
+          </summary>
+          <div class="info">A (simulated) client has sent a <code>POST</code> request to the (mock) Bling server endpoint <code>/payment_intents/<x-rand>pi_xPRR-TI8UZW-KiTIT1J52</x-rand>/confirm</code> with the following payload: <pre>{
+  "client_secret": "<x-rand>cs_SNpj5ts8vUDpD2nJgHt_c</x-rand>",
+  "cardholder": "<x-rand>Jorge Munoz</x-rand>",
+  "cardnumber": "<x-rand>4903229224483953</x-rand>",
+  "exp_month": <x-rand>8</x-rand>,
+  "exp_year": <x-rand>2027</x-rand>,
+  "cvc": <x-rand>956</x-rand>
+}</pre>Bling will decline the payment and send an event to the corresponding webhook.</div>
+          <details class="">
+            <summary>
+              <div class="description">send <code>POST</code> request to <code>/cart/checkout/payment-update</code> with JSON payload</div>
+            </summary>
+            <div class="info"><pre>POST /cart/checkout/payment-update HTTP/1.1
+Host: localhost:53784
+Content-Type: application/json
+Content-Length: 568
+
+{
+  "id": "<x-rand>ev_4cDwS86HSYT5Uzji2l-rQ</x-rand>",
+  "created_at": &quot;2023-08-31T14:16:30.562Z&quot;,
+  "type": "payment.failed",
+  "payment_intent": {
+    "id": "<x-rand>pi_xPRR-TI8UZW-KiTIT1J52</x-rand>",
+    "created_at": &quot;2023-08-31T14:16:30.560Z&quot;,
+    "amount": <x-user>25325</x-user>,
+    "currency": "<x-user>eur</x-user>",
+    "client_secret": "<x-rand>cs_SNpj5ts8vUDpD2nJgHt_c</x-rand>",
+    "webhook": "<x-user>https://akupohva.test/cart/checkout/payment-update</x-user>",
+    "status": "failed",
+    "payment_error": "card_declined",
+    "card": {
+      "cardholder": "<x-rand>Jorge Munoz</x-rand>",
+      "last4": "<x-rand>3953</x-rand>",
+      "exp_month": <x-rand>8</x-rand>,
+      "exp_year": <x-rand>2027</x-rand>
+    }
+  }
+}</pre></div>
+          </details>
+          <details class="">
+            <summary>
+              <div class="description">receive response</div>
+            </summary>
+            <div class="info"><pre>HTTP/1.1 403 Forbidden
+X-Powered-By: Express
+Content-Type: text/plain; charset=utf-8
+Content-Length: 9
+ETag: W/"9-PatfYBLj4Um1qTm5zrukoLhNyPU"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+Forbidden</pre></div>
+          </details>
+          <details class="empty">
+            <summary>
+              <div class="description">expect response status to be <code>204 No Content</code></div>
+            </summary>
+          </details>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected: 204 No Content
+Received: 403 Forbidden</td>
+    </tr>
+
+    <tr class="test failed">
+      <td>309 &mdash; Illegitimate webhook request</td>
+      <td class="points">&minus;0.5</td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <details class="">
+          <summary>
+            <div class="description">start app server</div>
+          </summary>
+          <div class="info"><pre>process.env.ARTMART_BASE_URL = '<x-rand>https://vaztezez.test</x-rand>';
+process.env.BLING_API_KEY = '<x-rand>ak_DzqRy066ixCqkfTkH2-go</x-rand>';
+
+const app = require('./app');
+app.listen(0);</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">start intercepting requests to the Bling API</div>
+          </summary>
+          <div class="info"><ul><li>All requests to relevant parts of the Bling API will return internally consistent mock responses.</li>
+<li>All other requests will result in a response of <code>501 Not Implemented</code>.</li></ul></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">send <code>POST</code> request to <code>/cart/checkout/payment-update</code> with JSON payload</div>
+          </summary>
+          <div class="info"><pre>POST /cart/checkout/payment-update HTTP/1.1
+Host: localhost:53798
+Content-Type: application/json
+Content-Length: 417
+
+{
+  "id": "<x-rand>ev_xbLtMmF_QO8FOuniroyBh</x-rand>",
+  "created_at": <x-rand>&quot;2021-06-23T09:07:43.973Z&quot;</x-rand>,
+  "type": "<x-rand>payment.succeeded</x-rand>",
+  "payment_intent": {
+    "id": "<x-rand>pi_ZvXbBqtBtyN-X0GD4b8tb</x-rand>",
+    "created_at": <x-rand>&quot;2021-06-23T09:07:43.973Z&quot;</x-rand>,
+    "amount": <x-rand>1566069726642176</x-rand>,
+    "currency": "<x-rand>eur</x-rand>",
+    "client_secret": "<x-rand>cs_1FeGuZGmxD0-gJaoxF3_b</x-rand>",
+    "webhook": "<x-rand>https://af.test/cart/checkout/payment-update</x-rand>",
+    "status": "<x-rand>succeeded</x-rand>"
+  }
+}</pre></div>
+        </details>
+        <details class="">
+          <summary>
+            <div class="description">receive response</div>
+          </summary>
+          <div class="info"><pre>HTTP/1.1 403 Forbidden
+X-Powered-By: Express
+Content-Type: text/plain; charset=utf-8
+Content-Length: 9
+ETag: W/"9-PatfYBLj4Um1qTm5zrukoLhNyPU"
+Date: Thu, 31 Aug 2023 14:16:30 GMT
+Connection: close
+
+Forbidden</pre></div>
+        </details>
+        <details class="empty">
+          <summary>
+            <div class="description">expect response status to be <code>400 Bad Request</code></div>
+          </summary>
+        </details>
+      </td>
+    </tr>
+
+    <tr class="error">
+      <td colspan=2>Expected: 400 Bad Request
+Received: 403 Forbidden</td>
+    </tr>
+
+  </table>
+  <h2>Frames</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>401 &mdash; Frame styles</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>402 &mdash; Frame image</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>403 &mdash; Unknown frame style</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>404 &mdash; Unknown image type</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Mats</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>501 &mdash; Mat colors</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Shipping</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>601 &mdash; Shipping destinations</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+</body>
+
+</html>
