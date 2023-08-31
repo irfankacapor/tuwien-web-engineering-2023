@@ -21,57 +21,8 @@
 
   <main>
     <section id="cart" class="cart">
-      <script>
+      <script type="module" src="./cart.js">
         cartItems = getCartItems();
-
-        function removeItem(index){
-          const itemToBeRemoved = document.getElementById(`${index}`);
-          const priceOfItemToBeRemoved = document.querySelector(`#p${index}`).innerText.substring(2);
-          itemToBeRemoved.remove();
-          cartItems.splice(index - 1, 1);
-
-          
-          updateCartItemCount(cartItems);
-          
-          updateTotalPrice(priceOfItemToBeRemoved);
-          putCartItems(cartItems);
-        }
-
-        function putCartItems(items){
-          console.log(items);
-          localStorage.setItem("cart", JSON.stringify(items));
-        }
-
-        function updateCartItemCount(items){
-          const itemCount = items.length;
-          const link = document.querySelector("#cart-link");
-          if (itemCount === 0) {
-            link.textContent = "Cart";
-            const cart = document.getElementById("cart");
-            const message = document.createElement("h1");
-            message.innerText = "There are no items in your shopping cart.";
-            cart.appendChild(message);
-            document.querySelector("#cart-checkout").style.visibility = "hidden";
-            document.querySelector("#cart-total").style.visibility = "hidden";
-          } else {
-            link.textContent = "Cart (" + itemCount + ")";
-          }
-        }
-
-        function updateTotalPrice(price){
-          const totalPrice = document.getElementById("price-total");
-          const formerPrice = parseFloat(totalPrice.innerText.substring(2)).toFixed(2);
-          const newPrice = formerPrice - parseFloat(price).toFixed(2);
-          totalPrice.innerText = "€ " + newPrice.toFixed(2);
-        }
-
-        function getCartItems() {
-          var cart = JSON.parse(localStorage.getItem('cart'));
-          if (!cart) {
-              cart = [];
-          }
-          return cart;
-        }
       </script>
 
       <div id="cart-total" class="cart-total">Total: <span id="price-total">0</span></div>
@@ -82,6 +33,7 @@
   <script type="module">
     import * as Frame from './frame.js';
     import * as Cart from './cart.js';
+
     let numberOfItems = 0;
     // First get the items that were added to the cart using the helper function in cart.js
     const cartItems = Cart.getCartItems();
@@ -107,6 +59,15 @@
     const totalPrice = document.querySelector("#price-total");
     totalPrice.textContent = "€ " + total.toFixed(2);
 
+    async function getData(objectID){
+      let data = JSON.parse(localStorage.getItem(objectID));
+      if(!data){
+        let response = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`) // Get specific artwork
+        data = await response.json();
+        localStorage.setItem(objectID, JSON.stringify(data))
+      }
+      return data;
+    }
     /** 
      * Adds the given cart item to the DOM.
      * 
@@ -117,34 +78,6 @@
     async function createCartItem(cartItem) {
       // First get the data that is needed to write the correct info
       const data = await getData(cartItem.objectID);
-      
-      async function getData(objectID){
-        let response = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`) // Get specific artwork
-        let rawData = await response.json();
-        return rawData;
-        // const headers = new Headers();
-        // const request = new Request("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + objectID, {
-        //   method: "GET",
-        //   headers: headers,
-        //   mode: "cors",
-        //   cache: "force-cache"
-        // })
-        // try{
-        //   const cache= await caches.open("v1");
-        //   const cachedResponse = await cache.match(request);
-
-        //   if(!cachedResponse){
-        //     return cachedResponse.json();
-        //   }else{
-        //     const response = await fetch(request);
-        //     await cache.put(request, response.clone());
-        //     const cachedValue = await cache.match(request);
-        //     return cachedValue.json();
-        //   }
-        // } catch (error) {
-        //   console.log(error);
-        // }
-      }
 
       const printSize = cartItem.printSize;
       const frameStyle = cartItem.frameStyle;
@@ -186,7 +119,11 @@
       numberOfItems += 1;
 
       itemDiv.classList.add("cart-item");
-      itemDiv.id = `${numberOfItems}`;
+      itemDiv.id = `${parseFloat(cartItem.objectID) + cartItem.frameWidth + cartItem.matWidth}`;
+
+      window.removeItemFromCart = (objectID, printSize, frameStyle, frameWidth, matColor, matWidth) => {
+        Cart.removeItem({"objectID": objectID, "printSize": printSize, "frameStyle": frameStyle, "frameWidth": frameWidth, "matColor": matColor, "matWidth": matWidth});
+      }
     
       const labelDiv = document.createElement("div");
       labelDiv.classList.add("museum-label");
@@ -198,8 +135,9 @@
             <br><br>
             <span class="frame-description">${description}</span>
           </div>
-          <div class="price" id="p${numberOfItems}">€ ${itemPrice}</div>
-          <button class="cart-remove" aria-label="Remove" onclick="removeItem(${numberOfItems})"></button>`;
+          <div class="price" id="p${parseFloat(cartItem.objectID) + cartItem.frameWidth + cartItem.matWidth}">€ ${itemPrice}</div>
+          <button class="cart-remove" aria-label="Remove" onclick="removeItemFromCart(${cartItem.objectID}, '${cartItem.printSize}', '${cartItem.frameStyle}', ${cartItem.frameWidth}, '${cartItem.matColor}', ${cartItem.matWidth})"></button>`
+
 
       itemDiv.appendChild(labelDiv);
       

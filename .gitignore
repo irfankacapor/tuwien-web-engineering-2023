@@ -1,0 +1,11 @@
+**/**/node_modules/
+**/node_modules/
+
+.idea/
+.vscode/
+
+**/test/report.*
+**/**/test/report.*
+
+.DS_Store
+Task 2 - JavaScript/.DS_Store
