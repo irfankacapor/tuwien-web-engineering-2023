@@ -90,7 +90,7 @@ You will be using [Node.js](https://nodejs.org) and the [Express](https://expres
 
 #### What you need to do
 
-- You need to fully implement the API specified in the [Artmart API documentation][api_docs] and fulfill the additional requirements described below.
+- You need to fully implement the API specified in the table below and fulfill the additional requirements described further below.
 
   The Artmart API uses standard HTTP methods and response codes. It accepts and returns JSON-encoded data.
 
