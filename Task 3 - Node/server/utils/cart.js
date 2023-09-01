@@ -28,7 +28,7 @@ class Cart {
    * @return {number} The id of the newly added item
    */
   addItem(artworkId, printSize, frameStyle, frameWidth, matWidth, matColor) {
-    const itemId = this.nextItemId++;  
+    const itemId = this.nextItemId++;
 
     const currentPrice = calculatePrice(
       printSize,
@@ -38,8 +38,8 @@ class Cart {
     );
     this.items.set(itemId, {
       cartItemId: itemId,
-      price: currentPrice,
       artworkId,
+      price: currentPrice,
       printSize,
       frameStyle,
       frameWidth,
