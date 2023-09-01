@@ -2,17 +2,64 @@
  * This module contains the routes under /cart
  */
 
-'use strict';
+"use strict";
 
-const express = require('express');
+const express = require("express");
 const routes = express.Router();
 
-const Session = require('../utils/session');
-const Cart = require('../utils/cart');
-const { calculatePrice } = require('../utils/price.js');
+const Session = require("../utils/session");
+const Cart = require("../utils/cart");
+const { calculatePrice } = require("../utils/price.js");
 
-const sessionCookieName = 'sessionId';
+const sessionCookieName = "sessionId";
 
+const isInputValid = (
+  printSize,
+  frameStyle,
+  frameWidth,
+  matColor,
+  matWidth
+) => {
+  const errors = {};
+  if (printSize === undefined) errors.printSize = "missing";
+  else if (!(printSize === "S" || printSize === "M" || printSize === "L"))
+    errors.printSize = "invalid";
+
+  if (frameStyle === undefined) errors.frameStyle = "missing";
+  else if (
+    !(
+      frameStyle === "shabby" ||
+      frameStyle === "classic" ||
+      frameStyle === "natural" ||
+      frameStyle === "elegant"
+    )
+  )
+    errors.frameStyle = "invalid";
+
+  if (frameWidth === undefined) errors.frameWidth = "missing";
+  else if (frameWidth < 20 || frameWidth > 50) errors.frameWidth = "invalid";
+
+  if (
+    matColor &&
+    !(
+      matColor === "tea" ||
+      matColor === "cerise" ||
+      matColor === "cerulean" ||
+      matColor === "oxford" ||
+      matColor === "raisin"
+    )
+  )
+    errors.matColor = "invalid";
+
+  if (matWidth === undefined) errors.matWidth = "missing";
+  else if (matWidth < 0 || matWidth > 10) errors.matWidth = "invalid";
+
+  const isValid = Object.keys(errors).length === 0;
+
+  return isValid
+    ? { message: "Validation passed" }
+    : { message: "Validation failed", errors };
+};
 
 /**
  * Load the cart for a given SID
@@ -86,6 +133,18 @@ routes.post("/", (req, res) => {
   // Extract item data from request body
   const { artworkId, printSize, frameStyle, frameWidth, matWidth, matColor } =
     req.body;
+
+  const validationResult = isInputValid(
+    printSize,
+    frameStyle,
+    frameWidth,
+    matColor,
+    matWidth
+  );
+  if (validationResult.message !== "Validation passed") {
+    res.status(400).json(validationResult);
+    return;
+  }
 
   // Calculate price server-side
   const price = calculatePrice(

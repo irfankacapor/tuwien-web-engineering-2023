@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>A3 Test Report</title>
+  <style>
+    :root {
+      --sans: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+      --mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+    }
+
+    body {
+      font-family: var(--sans);
+      margin: 4rem;
+    }
+
+    pre {
+      font-family: var(--mono);
+      white-space: pre-wrap;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-spacing: 0;
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+
+    td {
+      border-top: 1px solid black;
+      padding: 0.5em 0;
+      word-wrap: break-word;
+    }
+
+    tr.test {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .passed {
+      background-color: lightgreen;
+    }
+
+    .passed>td:first-child::before {
+      content: '✓';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .failed {
+      background-color: lightcoral;
+    }
+
+    .failed>td:first-child::before {
+      content: '✘';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .pending {
+      background-color: gainsboro;
+    }
+
+    .pending>td:first-child::before {
+      content: '?';
+      display: inline-block;
+      width: 1.75em;
+      text-align: center;
+    }
+
+    .error>td {
+      padding: 1em;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+    }
+
+    .points {
+      text-align: right;
+      width: 5ch;
+      padding-right: 1em;
+      padding-left: 1em;
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+
+    x-rand {
+      background-color: lightgoldenrodyellow;
+    }
+
+    x-user {
+      background-color: aliceblue;
+    }
+
+    details {
+      display: block;
+      word-wrap: break-word;
+      margin: 0.5em 1em;
+    }
+
+    details > details {
+      margin-left: 1.5em;
+    }
+
+    summary {
+      outline: none;
+      cursor: pointer;
+    }
+
+    .description {
+      display: inline;
+    }
+
+    .description::before {
+      content: '☑ ';
+    }
+
+    .info {
+      font-size: small;
+      margin-left: 1.75em;
+      margin-top: 0.5em;
+    }
+
+    .info ul {
+      padding-left: 1.5em;
+    }
+
+    details.empty {
+      pointer-events: none;
+    }
+
+    details.empty>summary::-webkit-details-marker,
+    details.empty>summary::marker {
+      color: white;
+    }
+
+    td>details:last-child>summary>.description,
+    td>details:last-child>details:last-child>summary>.description {
+      color: red;
+    }
+
+    td>details:last-child>summary>.description::before,
+    td>details:last-child>details:last-child>summary>.description::before {
+      content: '☒ ';
+    }
+  </style>
+  <script>
+    function toggle(e) {
+      const x = e.nextElementSibling;
+      if (x.style.display == 'block') {
+        x.style.display = 'none';
+        e.innerText = 'show';
+      } else {
+        x.style.display = 'block';
+        e.innerText = 'hide';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('td > details:last-child').forEach((e) => e.open = true);
+      document.querySelectorAll('td > details:last-child > details:last-child').forEach((e) => e.open = true);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>A3 Test Report<span style="float: right;">15 points 🥳</span></h1>
+  2023-09-01 12:55:57 UTC<br>
+  36 tests &mdash; 36 passed / 0 failed<br>
+  <br>
+  15 points<br>
+  &minus;0 points for failed tests<br>
+  = 15 points total<br>
+  <br>
+  Seed: <code>1</code><br>
+  <small>(used to generate <x-rand>random input values</x-rand>)</small><br>
+
+  <h2>Artworks</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>101 &mdash; Artwork</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>102 &mdash; Unknown artwork</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>103 &mdash; Artwork cache</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>104 &mdash; Highlights</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>105 &mdash; Highlights cache</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>106 &mdash; Search</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>107 &mdash; Search without results</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>108 &mdash; Search cache</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Cart</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>201 &mdash; Create cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>202 &mdash; Add one item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>203 &mdash; Add two items</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>204 &mdash; Unnecessary fields</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>205 &mdash; Validation</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>206 &mdash; Multiple carts</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>207 &mdash; Clear cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>208 &mdash; Get item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>209 &mdash; Get unknown item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>210 &mdash; Remove item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>211 &mdash; Remove unknown item</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>212 &mdash; Missing session</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>213 &mdash; Invalid session</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Checkout</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>301 &mdash; Create payment intent</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>302 &mdash; Missing session for checkout</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>303 &mdash; Invalid session for checkout</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>304 &mdash; Checkout with empty cart</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>305 &mdash; Invalid customer information</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>306 &mdash; Order receipt</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>307 &mdash; Clear cart after checkout</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>308 &mdash; Failed payment</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>309 &mdash; Illegitimate webhook request</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Frames</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>401 &mdash; Frame styles</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>402 &mdash; Frame image</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>403 &mdash; Unknown frame style</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+    <tr class="test passed">
+      <td>404 &mdash; Unknown image type</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Mats</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>501 &mdash; Mat colors</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+  <h2>Shipping</h2>
+
+
+  <table>
+    <tr class="test passed">
+      <td>601 &mdash; Shipping destinations</td>
+      <td class="points"></td>
+    </tr>
+
+
+
+  </table>
+</body>
+
+</html>

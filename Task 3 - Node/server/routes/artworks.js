@@ -15,19 +15,18 @@ const highlights = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../resources/highlights.json"))
 ).highlights;
 
-const NodeCache = require("node-cache");
-const cache = new NodeCache();
+const cache = {};
 
 async function getArtwork(artworkId) {
   /** Check if response is already cached */
-  const cachedResponse = cache.get(artworkId);
+  const cachedResponse = cache[artworkId];
   if (cachedResponse) {
     return cachedResponse;
   }
 
   /** If response is not cached, fetch from Met API */
   const res = await fetch(MET_BASE_URL + "/objects/" + artworkId);
-  if (!res.ok) {
+  if (!res) {
     return null;
   }
   const obj = await res.json();
@@ -45,13 +44,13 @@ async function getArtwork(artworkId) {
   };
 
   /** Cache response */
-  cache.set(artworkId, finalResponse);
+  cache[artworkId] = finalResponse;
 
   return finalResponse;
 }
 
 routes.get("/", async (req, res) => {
-  if (req.query.q == null) {
+  if (req.query.q === null || req.query.q === undefined || req.query.q === "") {
     // Return highlights
     const highlightsDetails = await Promise.all(
       highlights.map(async (highlightId) => {
@@ -62,22 +61,24 @@ routes.get("/", async (req, res) => {
   } else {
     // Search for artworks
     const cacheKey = `search:${req.query.q}`;
-    const cachedSearchResults = cache.get(cacheKey); // get the artworks associated with this search from cache
+    const cachedSearchResults = cache[cacheKey]; // get the artworks associated with this search from cache
     if (cachedSearchResults) {
       res.send(cachedSearchResults); // If there are cached results, just send them
-      console.log("got it from cache");
       return;
     }
 
     // Make a search to the MET Api
-    const searchRes = await fetch(`${MET_BASE_URL}/search?q=${req.query.q}`);
+    const searchRes = await fetch(
+      `${MET_BASE_URL}/search?hasImages=true&q=${req.query.q}`
+    );
     if (!searchRes.ok) {
       res.sendStatus(500);
       return;
     }
     // Convert to json
     const searchResults = await searchRes.json();
-    if (!searchResults.objectIDs) {
+
+    if (searchResults.objectIDs === null) {
       // If there are no objects found
       res.send([]); // Return an empty array
       return;
@@ -90,7 +91,7 @@ routes.get("/", async (req, res) => {
       })
     );
 
-    cache.set(cacheKey, artworks);
+    cache[cacheKey] = artworks;
 
     res.send(artworks);
   }
