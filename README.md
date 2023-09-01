@@ -18,7 +18,7 @@ __Task 2__: Navigate to the folder `./Task 2 - JavaScript/test` and execute `npm
 
 __Task 3__: Execute `npm install` within the `./Task 3 - Node` folder to install dependencies. Launch the server by running `npm start`. At this point, requests can be sent to interact with the server.
 
-__Task 4__: Install dependencies by executing `npm install"` within the `./Task 4 - Vue.js/test` folder. Start the application by running `npm run dev` to observe its functionality in action.
+__Task 4__: Install dependencies by executing `npm install` within the `./Task 4 - Vue.js/test` folder. Start the application by running `npm run dev` to observe its functionality in action.
 
 ##### Detailed descriptions of tasks are given below
 
