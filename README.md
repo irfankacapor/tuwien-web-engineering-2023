@@ -92,6 +92,32 @@ You will be using [Node.js](https://nodejs.org) and the [Express](https://expres
 
 - You need to fully implement the API specified in the [Artmart API documentation][api_docs] and fulfill the additional requirements described below.
 
+  The Artmart API uses standard HTTP methods and response codes. It accepts and returns JSON-encoded data.
+
+The API offers access to a number of resources over twelve endpoints:
+
+Method | Endpoint       | Description
+-------|----------------|------------
+GET    | /artworks{?q}  | Search artworks
+GET    | /artworks/{id} | Retrieve a single artwork's metadata
+GET    | /cart          | List all items in the shopping cart
+POST   | /cart          | Add an item to the shopping cart
+DELETE | /cart          | Empty the shopping cart
+GET    | /cart/{id}     | Retrieve a shopping cart item
+DELETE | /cart/{id}     | Remove a shopping cart item
+POST   | /cart/checkout | Place an order and initiate the payment process
+GET    | /frames        | List available frame styles
+GET    | /frames/{style}/{imageType} | Get a particular frame image
+GET    | /mats          | List available mat colors
+GET    | /shipping      | List available shipping destinations
+
+Additionally, the server exposes a webhook used during the payment process:
+
+Method | Endpoint       | Description
+-------|----------------|------------
+POST   | /cart/checkout/payment-update | Payment webhook for Bling
+
+
 For the **``/artworks``** endpoint:
 
 - You should implement an API gateway to the [Metropolitan Museum of Art Collection API][met_api]. In particular, `artworkId` should be identical with the Met API's `objectId`. The `image` should be `primaryImageSmall`.
