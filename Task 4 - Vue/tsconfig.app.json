@@ -6,7 +6,7 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./Task 4 - Vue/src/*"]
     },
     "allowJs": true,
     "outDir": "dist"
